@@ -26,22 +26,21 @@ public class DepthFirstSearch extends Search
 		while (!found && !stack.empty()) 
 		{
 			BoardState currentState = stack.pop();
-			System.out.println("Stack 1:" + stack.toString()); 
+			//System.out.println("Stack 1:" + stack.toString()); 
 
 			if (!checkGoalState(currentState, goalState))
 			{
 				expand(currentState);
-				System.out.println();
-				for( int i = 0; i < currentState.children.size(); i++ )
+				System.out.println("Children: " + children.size());
+				for( int i = 0; i < children.size(); i++ )
 				{
-					stack.push(currentState.children.get(i));
-					System.out.println("Stack 2:" + stack.toString()); 
+					stack.push(children.get(i));
+					System.out.println("ChildrenStack || SIZE: " + stack.size() + stack.toString()); 
 				}
-			
-				System.out.println("Stack 3:" + stack.toString()); 
 			}
 			else
 			{
+				System.out.println("FOUND");
 				found = true; 
 			}
 

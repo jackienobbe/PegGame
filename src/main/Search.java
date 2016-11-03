@@ -7,11 +7,10 @@ public abstract class Search
 {
 	protected List<BoardState> closed = new LinkedList<BoardState>();
 	protected static List<BoardState> fringe = new LinkedList<BoardState>();
+	protected static List<BoardState> children = new LinkedList<BoardState>();
 
-	static void expand( BoardState currentBoard )
+	static List<BoardState> expand( BoardState currentBoard )
 	{
-		List<BoardState> children = new LinkedList<BoardState>();
-
 		for( int i = 0; i < currentBoard.getPegPositions().length; i++ )
 		{
 			for ( int j = 0; j < currentBoard.getPegPositions()[i].length; j++ )
@@ -101,10 +100,18 @@ public abstract class Search
 		}
 		//currentBoard.setBranchingFactor(children.size());
 		//currentBoard.setChildren(children);
-
+//		System.out.println("children");
+//		for(int s=0;s<children.size();s++){
+//		    System.out.println(children.get(s));
+//		} 
+		
 		fringe.addAll(children);
+//		System.out.println("fringe");
+//		for(int s=0;s<fringe.size();s++){
+//		    System.out.println(fringe.get(s));
+//		} 		
 		fringe.remove(currentBoard);
-		return;
+		return children;
 
 	}
 	public boolean checkGoalState( BoardState board, BoardState goalState)
@@ -115,10 +122,12 @@ public abstract class Search
 			{
 				if( board.getPegPositions()[i][j] != goalState.getPegPositions()[i][j])
 				{
+					System.out.println("NOT GOAL");
 					return false; 
 				}
 			}
 		}
+		System.out.println("GOOOOALLLLLLLL");
 		return true; 
 	}
 	public abstract boolean find(BoardState initialState, BoardState goalState);

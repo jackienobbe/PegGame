@@ -40,7 +40,6 @@ public class Driver
 	}
 	static boolean checkZeroMoveUp( BoardState board, int i, int j ) 
 	{
-		System.out.println("checkMoveUp: y" + i + ", x" + j );
 		// check if move will be out of bounds
 		if ( i > BOARD_UP_BOUNDARY)
 		{
@@ -49,13 +48,9 @@ public class Driver
 					board.getPegPositions()[i - 1][j] == 1 && 
 					board.getPegPositions()[i - 2][j] == 1 )
 			{
-				System.out.println(i +", "+ j); 
-
 				return true; 
 			}
-			System.out.println("here"); 
 		}
-		System.out.println("here"); 
 		return false; 
 	}
 	static boolean checkZeroMoveDown( BoardState board, int i, int j ) 

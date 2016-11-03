@@ -53,7 +53,7 @@ public class Main {
 			};
 		//BoardState board = new BoardState(initialStateFake1, 0); 	
 		
-		BoardState initialBoardState = new BoardState(originalBoard, 0); 			
+		BoardState initialBoardState = new BoardState(initialStateFake1, 0); 			
 		BoardState goalBoardState = new BoardState(goalState, 0);
 		
 		//System.out.println("Board Length: " + board.length);
