@@ -27,16 +27,20 @@ public class DepthFirstSearch extends Search
 		{
 			BoardState currentState = stack.pop();
 			//System.out.println("Stack 1:" + stack.toString()); 
+			//System.out.println("Stack || SIZE: " + stack.size() + stack.toString()); 
+			//System.out.println(""); 
 
 			if (!checkGoalState(currentState, goalState))
 			{
 				expand(currentState);
-				System.out.println("Children: " + children.size());
-				for( int i = 0; i < children.size(); i++ )
+				//System.out.println("Children: " + currentState.children.size());
+				for( int i = 0; i < currentState.children.size(); i++ )
 				{
-					stack.push(children.get(i));
-					System.out.println("ChildrenStack || SIZE: " + stack.size() + stack.toString()); 
+					//System.out.println("HEREEE"); 
+					stack.push(currentState.children.get(i));
+
 				}
+				//System.out.println("ChildrenStack || SIZE: " + stack.size() + stack.toString()); 
 			}
 			else
 			{
