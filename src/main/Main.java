@@ -1,7 +1,5 @@
 package main;
 
-import java.util.List;
-
 public class Main {
 
 	public BoardState goalBoardState; 
@@ -57,7 +55,11 @@ public class Main {
 			System.out.println(" ");
 		}
 	
-		DepthFirstSearch dfs = new DepthFirstSearch();  
-		dfs.find(initialBoardState, goalBoardState); 
+		//DepthFirstSearch dfs = new DepthFirstSearch();  
+		//dfs.find(initialBoardState, goalBoardState); 
+		
+		BreadthFirstSearch bfs = new BreadthFirstSearch();  
+		bfs.find(initialBoardState, goalBoardState); 
+		
 	}
 }

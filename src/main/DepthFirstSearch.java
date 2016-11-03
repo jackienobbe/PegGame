@@ -20,7 +20,6 @@ public class DepthFirstSearch extends Search
 		boolean found = false;
 
 		stack.push(initialState);
-		//BoardState previous = initialState;
 		while (!found && !stack.empty()) 
 		{
 			BoardState currentState = stack.pop();
