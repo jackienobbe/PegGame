@@ -12,16 +12,6 @@ public abstract class Search
 	{
 		List<BoardState> children = new LinkedList<BoardState>();
 
-		//Driver.zeroFinder(currentBoard);// an array for each state
-		// loop qround the array con the zeros
-		//single function
-		//check the +1 +2 of the 0 x left checkleft
-		//check the -1 -2 of the 0 x right so checkright
-		////check the +1 +2 of the 0 y up so check up
-		//check the -1 -2 of the 0 y down so check down
-		//move the peg and add it's state to the children list 
-		// call BoardState recursively with one of the states of the children 
-
 		for( int i = 0; i < currentBoard.getPegPositions().length; i++ )
 		{
 			for ( int j = 0; j < currentBoard.getPegPositions()[i].length; j++ )
@@ -29,79 +19,83 @@ public abstract class Search
 				if(currentBoard.getPegPositions()[i][j] == 0)
 				{
 					if(Driver.checkZeroMoveRight( currentBoard, i, j ))
-					{
-						BoardState newPegs = null;
-//						try 
-//						{
-//							newPegs = (BoardState) currentBoard.clone();
-//							Driver.printArray(newPegs);
-//						} catch (CloneNotSupportedException e) {
-//							e.printStackTrace();
-//						}
+					{						
+						int[][] newPegs = new int[currentBoard.getPegPositions().length][currentBoard.getPegPositions().length];
+						for( int g = 0; g < currentBoard.getPegPositions().length; g++)
+						{
+							for(int h = 0; h < currentBoard.getPegPositions()[g].length; h++)
+							{
+								newPegs[g][h] = currentBoard.getPegPositions()[g][h];
+							}
+						}
+						BoardState child = new BoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
 
-						//BoardState child = new BoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
-						Driver.printArray(newPegs);
-						System.out.println("!!!!!"); 
-						Driver.printArray(currentBoard);
-						newPegs = Driver.movePegRight( newPegs, i, j ); 
-						System.out.println("WOWOWOWO"); 
-						Driver.printArray(currentBoard);
-
-						children.add(newPegs);
+						child = Driver.movePegRight( child, i, j ); 
+						children.add(child);
 
 						System.out.println("Move Right"); 
-						Driver.printArray(newPegs);
-
-						System.out.println("Curr"); 
-						Driver.printArray(currentBoard);
-						//Driver.replaceRight(currentBoard, i, j);
+						Driver.printArray(child);
 
 					}
-					//					if(Driver.checkZeroMoveLeft( currentBoard, i, j ))
-					//					{
-					//						Driver.printArray(currentBoard);
-					//						//int[][] newPegs = currentBoard.getPegPositions();
-					//						BoardState child = new BoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
-					//
-					//						child = Driver.movePegLeft( currentBoard, i, j ); 
-					//
-					//						children.add(child);
-					//
-					//						//System.out.println("Move the zero left"); 
-					//						Driver.printArray(child);
-					//
-					//						//Driver.replaceLeft(currentBoard, i, j);
-					//					}
+					if(Driver.checkZeroMoveLeft( currentBoard, i, j ))
+					{
+						int[][] newPegs = new int[currentBoard.getPegPositions().length][currentBoard.getPegPositions().length];
+						for( int g = 0; g < currentBoard.getPegPositions().length; g++)
+						{
+							for(int h = 0; h < currentBoard.getPegPositions()[g].length; h++)
+							{
+								newPegs[g][h] = currentBoard.getPegPositions()[g][h];
+							}
+						}
+						BoardState child = new BoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
+						
+						child = Driver.movePegLeft( child, i, j ); 
+						children.add(child);
 
-					//					if(Driver.checkZeroMoveUp( currentBoard, i, j ))
-					//					{						
-					//						int[][] newPegs = currentBoard.getPegPositions();
-					//						BoardState child = new BoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
-					//
-					//						child = Driver.movePegUp( child, i, j ); 
-					//
-					//						children.add(child);
-					//
-					//						System.out.println("Move UP"); 
-					//						Driver.printArray(child);
-					//
-					//						//Driver.replaceUp(currentBoard, i, j);
-					//
-					//					}
+						System.out.println("Move left"); 
+						Driver.printArray(child);
+					}
 
-					//					if(Driver.checkZeroMoveDown( currentBoard, i, j ))
-					//					{						
-					//						int[][] newPegs = currentBoard.getPegPositions();
-					//						BoardState child = new BoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
-					//						child = Driver.movePegDown( child, i, j ); 
-					//
-					//						children.add(child);
-					//
-					//						System.out.println("Move down"); 
-					//						Driver.printArray(child);
-					//
-					//						//Driver.replaceDown(currentBoard, i, j);
-					//					}
+					if(Driver.checkZeroMoveUp( currentBoard, i, j ))
+					{						
+						System.out.println("here"); 
+
+						int[][] newPegs = new int[currentBoard.getPegPositions().length][currentBoard.getPegPositions().length];
+						for( int g = 0; g < currentBoard.getPegPositions().length; g++)
+						{
+							for(int h = 0; h < currentBoard.getPegPositions()[g].length; h++)
+							{
+								newPegs[g][h] = currentBoard.getPegPositions()[g][h];
+							}
+						}
+						BoardState child = new BoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
+
+						child = Driver.movePegUp( child, i, j ); 
+						children.add(child);
+
+						System.out.println("Move UP"); 
+						Driver.printArray(child);
+
+					}
+
+					if(Driver.checkZeroMoveDown( currentBoard, i, j ))
+					{						
+						int[][] newPegs = new int[currentBoard.getPegPositions().length][currentBoard.getPegPositions().length];
+						for( int g = 0; g < currentBoard.getPegPositions().length; g++)
+						{
+							for(int h = 0; h < currentBoard.getPegPositions()[g].length; h++)
+							{
+								newPegs[g][h] = currentBoard.getPegPositions()[g][h];
+							}
+						}
+						BoardState child = new BoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
+
+						child = Driver.movePegDown( child, i, j ); 
+						children.add(child);
+
+						System.out.println("Move down"); 
+						Driver.printArray(child);
+					}
 				}
 			}
 		}
