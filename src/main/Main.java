@@ -26,21 +26,11 @@ public class Main {
 				{2, 2, 0, 0, 0, 2, 2},
 				{2, 2, 0, 0, 0, 2, 2},
 				{0, 0, 0, 0, 0, 0, 0},
-				{0, 0, 0, 0, 0, 1, 0},
+				{0, 0, 1, 0, 0, 1, 0},
 				{0, 0, 0, 0, 1, 0, 0},
 				{2, 2, 0, 0, 1, 2, 2},
 				{2, 2, 0, 0, 0, 2, 2}
 			};
-		
-		int[][] goalStateFake1 = {	
-				{2, 2, 1, 1, 1, 2, 2},
-				{2, 2, 1, 1, 1, 2, 2},
-				{1, 1, 1, 1, 1, 1, 1},
-				{1, 1, 1, 1, 1, 1, 1},
-				{1, 1, 1, 1, 0, 0, 1},
-				{2, 2, 1, 0, 1, 2, 2},
-				{2, 2, 1, 1, 1, 2, 2}
-					};
 		
 		int[][] goalState = {	
 				{2, 2, 0, 0, 0, 2, 2},
@@ -51,8 +41,7 @@ public class Main {
 				{2, 2, 0, 0, 0, 2, 2},
 				{2, 2, 0, 0, 0, 2, 2}
 			};
-		//BoardState board = new BoardState(initialStateFake1, 0); 	
-		
+//		BoardState initialBoardState = new BoardState(initialStateFake1, 0); 	
 		BoardState initialBoardState = new BoardState(originalBoard, 0); 			
 		BoardState goalBoardState = new BoardState(goalState, 0);
 		

@@ -2,7 +2,6 @@ package main;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
 
 public class BoardState implements Cloneable{
 	int[][] pegPositions;
@@ -16,12 +15,11 @@ public class BoardState implements Cloneable{
 		this.pegPositions = pegPositions; 
 		this.pathCost = pathCost; 
 	}
-
 	public int[][] getPegPositions() 
 	{
 		return pegPositions;
 	}
-	
+
 	public void setBranchingFactor(int branchingFactor)
 	{
 		this.branchingFactor = branchingFactor;
@@ -29,7 +27,7 @@ public class BoardState implements Cloneable{
 
 	public void setBoardState( int[][] newBoard, BoardState board) 
 	{
- 		board.pegPositions = newBoard; 
+		board.pegPositions = newBoard; 
 	}
 
 	void setChildren( List<BoardState> children )
@@ -41,7 +39,28 @@ public class BoardState implements Cloneable{
 	{
 		return children;
 	}
-	protected Object clone() throws CloneNotSupportedException {
-        return (BoardState) super.clone();
-    }
+	public int incrementPathCost()
+	{
+		return pathCost++; 
+	}
+
+	public boolean equals(Object o)
+	{
+		if(o instanceof BoardState)
+		{
+			BoardState board = (BoardState)o;
+			for(int i = 0; i < board.getPegPositions().length; i++)
+			{
+				for(int j = 0; j < board.getPegPositions()[i].length; j++)
+				{
+					if(this.pegPositions[i][j] != board.getPegPositions()[i][j])
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}  
+		else return false; 
+	}
 }

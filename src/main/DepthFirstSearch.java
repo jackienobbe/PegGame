@@ -1,13 +1,10 @@
 package main;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Stack;
 
 public class DepthFirstSearch extends Search 
 {
 	private Stack<BoardState> stack = new Stack<BoardState>();
-	//private List<Move> moves = new LinkedList<Move>();
 
 	DepthFirstSearch(){}
 
@@ -19,6 +16,7 @@ public class DepthFirstSearch extends Search
 
 	public boolean find(BoardState initialState, BoardState goalState) 
 	{
+		System.out.println("Searching... ");
 		boolean found = false;
 
 		stack.push(initialState);
@@ -26,46 +24,31 @@ public class DepthFirstSearch extends Search
 		while (!found && !stack.empty()) 
 		{
 			BoardState currentState = stack.pop();
-			//System.out.println("Stack 1:" + stack.toString()); 
-			//System.out.println("Stack || SIZE: " + stack.size() + stack.toString()); 
-			//System.out.println(""); 
 
-			if (!checkGoalState(currentState, goalState))
+			if (!checkGoalState(currentState, goalState, pegsRemaining))
 			{
 				expand(currentState);
-				//System.out.println("Children: " + currentState.children.size());
-				for( int i = 0; i < currentState.children.size(); i++ )
+			
+				if (!closed.contains(currentState)) 
 				{
-					//System.out.println("HEREEE"); 
-					stack.push(currentState.children.get(i));
-
+					closed.add(currentState);
+					
+					for( int i = 0; i < currentState.children.size(); i++ )
+					{
+						stack.push(currentState.children.get(i));
+					}
 				}
-				//System.out.println("ChildrenStack || SIZE: " + stack.size() + stack.toString()); 
+				System.out.println("Still searching... " + nodesExamined + " nodes expanded.");
+				
 			}
 			else
 			{
 				System.out.println("FOUND");
+				Driver.printArray(currentState);
 				found = true; 
 			}
-
-			//	if (!current.equals(initialState)) 
-			//	{
-			//		Move move = new Move(previous, current);
-			//		moves.add(move);
-			//	}
-			//	if (current.getChildren().size() == 0) 
-			//	{
-			//		return moves;
-			//	} 
-			//	else if (!closed.contains(current)) 
-			//	{
-			//		closed.add(current);
-			//		for (BoardState child : current.getChildren()) 
-			//		{
-			//			stack.push(child);
-			//		}
-			//	}
 		}
+		System.out.println(found);
 		return found;
 	}
 
