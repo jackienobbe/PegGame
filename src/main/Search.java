@@ -9,8 +9,30 @@ public abstract class Search
 	protected static List<BoardState> fringe = new LinkedList<BoardState>();
 	//protected static List<BoardState> children = new LinkedList<BoardState>();
 	static int pegsRemaining;// = 0; 
-	static int nodesExamined;
+	static int nodesExamined = 0;
+	public static int[] goalPosition = new int[2]; 
 
+	void setGoalPosition(BoardState goalState)
+	{
+		for (int i = 0; i < goalState.getPegPositions().length; i++ )
+		{
+			for(int j = 0; j < goalState.getPegPositions()[i].length; j++)
+			{
+				if(goalState.getPegPositions()[i][j] == 1)
+				{
+					goalPosition[0] = i; 
+					goalPosition[1] = j; 
+					System.out.println(i + " " + j);
+				}
+			}
+		}
+		System.out.println("HERE " + goalState.getPegPositions().length); 
+	}	
+	static int[] getGoalPosition()
+	{
+		return goalPosition; 
+	}
+	
 	static List<BoardState> expand( BoardState currentBoard )
 	{
 		pegsRemaining = 0; 
@@ -21,7 +43,7 @@ public abstract class Search
 				if(currentBoard.getPegPositions()[i][j] == 0)
 				{
 					if(Driver.checkZeroMoveRight( currentBoard, i, j ))
-					{						
+					{				
 						int[][] newPegs = new int[currentBoard.getPegPositions().length][currentBoard.getPegPositions().length];
 						for( int g = 0; g < currentBoard.getPegPositions().length; g++)
 						{
@@ -35,8 +57,8 @@ public abstract class Search
 						child = Driver.movePegRight( child, i, j ); 
 						currentBoard.children.add(child);
 
-						//						System.out.println("Move Right"); 
-						//						Driver.printArray(child);
+						//	System.out.println("Move Right"); 
+						//	Driver.printArray(child);
 
 					}
 
@@ -112,11 +134,10 @@ public abstract class Search
 
 		fringe.addAll(currentBoard.children);	
 		fringe.remove(currentBoard);
-		if (pegsRemaining < 7)
+		if (pegsRemaining < 6)
 		{
 			System.out.println("Pegs Remaining: " + pegsRemaining);
 		}
-		nodesExamined++; 
 		return currentBoard.children;
 	}
 	public boolean checkGoalState( BoardState board, BoardState goalState, int pegsRemaining )

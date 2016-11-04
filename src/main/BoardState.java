@@ -63,4 +63,10 @@ public class BoardState implements Cloneable{
 		}  
 		else return false; 
 	}
+	public int getHeuristicCost(BoardState board) 
+	{
+		int heuristicCost = Heuristic.manhattanCost(board); 
+		return heuristicCost;
+	}
+
 }

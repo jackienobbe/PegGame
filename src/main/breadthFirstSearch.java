@@ -1,7 +1,6 @@
 package main;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 public class BreadthFirstSearch extends Search 
@@ -26,9 +25,14 @@ public class BreadthFirstSearch extends Search
 
 		System.out.println("Searching... ");
 
-		while (!found && queue.size() == 0) 
+		while (!found && queue.size() != 0) 
 		{
+//			System.out.println("POP");
+//			System.out.println(queue.size());
+
 			BoardState currentState = queue.poll();
+//			System.out.println(queue.size());
+
 			if (!checkGoalState(currentState, goalState, pegsRemaining))
 			{
 				expand(currentState);
