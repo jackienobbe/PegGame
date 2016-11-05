@@ -16,11 +16,11 @@ public class GreedyBestFirstSearch extends Search
 		//		}
 
 		fringe.add(initialState);
-		System.out.println(fringe);
+		//System.out.println(fringe);
 
 		//BoardState previous = initialState;
 
-		while (!found && fringe.size() != 0 ) 
+		while (!found && !fringe.isEmpty() ) 
 		{
 			BoardState best = fringe.get(0);
 			for( int i = 0; i < fringe.size(); i++ )
@@ -35,7 +35,7 @@ public class GreedyBestFirstSearch extends Search
 			{
 				if(!closed.contains(best))
 				{
-					expand(best);
+					best.expand(best);
 					closed.add(best);
 
 					//best.setPathCost(best.getPathCost() + 1);
@@ -53,7 +53,7 @@ public class GreedyBestFirstSearch extends Search
 				found = true; 
 			}
 			
-			System.out.println("Still searching... " + nodesExamined + " nodes examined.");
+			//System.out.println("Still searching... " + nodesExamined + " nodes examined.");
 		}
 		return found;
 	}

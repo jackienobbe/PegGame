@@ -34,6 +34,15 @@ public class Main {
 				{2, 2, 0, 1, 0, 2, 2},
 				{2, 2, 0, 0, 0, 2, 2}
 		};
+		int[][] initialStateFake3 = {	
+				{2, 2, 0, 1, 1, 2, 2},
+				{2, 2, 1, 1, 0, 2, 2},
+				{1, 1, 0, 0, 0, 1, 0},
+				{1, 0, 0, 1, 0, 1, 1},
+				{0, 1, 0, 1, 0, 0, 1},
+				{2, 2, 0, 0, 0, 2, 2},
+				{2, 2, 0, 0, 0, 2, 2}
+		};
 
 		int[][] goalState = {	
 				{2, 2, 0, 0, 0, 2, 2},
@@ -44,11 +53,13 @@ public class Main {
 				{2, 2, 0, 0, 0, 2, 2},
 				{2, 2, 0, 0, 0, 2, 2}
 		};
-		
-		
-//		BoardState initialBoardState = new BoardState(initialStateFake1, 0); 	
-				BoardState initialBoardState = new BoardState(initialStateFake2, 0); 	
-//		BoardState initialBoardState = new BoardState(originalBoard, 0); 			
+
+
+				BoardState initialBoardState = new BoardState(initialStateFake1, 0); 	
+		//		BoardState initialBoardState = new BoardState(initialStateFake2, 0); 	
+		//BoardState initialBoardState = new BoardState(initialStateFake3, 0); 	
+
+		//		BoardState initialBoardState = new BoardState(originalBoard, 0); 			
 		BoardState goalBoardState = new BoardState(goalState, 0);
 
 		//System.out.println("Board Length: " + board.length);
@@ -63,15 +74,15 @@ public class Main {
 			System.out.println(" ");
 		}
 
-		DepthFirstSearch dfs = new DepthFirstSearch();  
-		dfs.find(initialBoardState, goalBoardState); 
+				DepthFirstSearch dfs = new DepthFirstSearch();  
+				dfs.find(initialBoardState, goalBoardState); 
 
-		//		BreadthFirstSearch bfs = new BreadthFirstSearch();  
-		//		bfs.find(initialBoardState, goalBoardState); 
-		
-//		GreedyBestFirstSearch gbf = new GreedyBestFirstSearch(); 
-//		gbf.setGoalPosition(goalBoardState); 
-//		gbf.find(initialBoardState, goalBoardState); 
+//		BreadthFirstSearch bfs = new BreadthFirstSearch();  
+//		bfs.find(initialBoardState, goalBoardState); 
+
+//				GreedyBestFirstSearch gbf = new GreedyBestFirstSearch(); 
+//				gbf.setGoalPosition(goalBoardState); 
+//				gbf.find(initialBoardState, goalBoardState); 
 
 	}
 }

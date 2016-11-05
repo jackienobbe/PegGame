@@ -2,7 +2,7 @@ package main;
 
 import java.util.List;
 
-public class GreedyBestFirstSearch extends Search 
+public class AStarSearch extends Search 
 {
 
 	@Override
@@ -25,7 +25,7 @@ public class GreedyBestFirstSearch extends Search
 			BoardState best = fringe.get(0);
 			for( int i = 0; i < fringe.size(); i++ )
 			{
-				if (fringe.get(i).getHeuristicCost(fringe.get(i)) + pathCost < best.getHeuristicCost(best)) 
+				if (fringe.get(i).getHeuristicCost(fringe.get(i)) + pathCost() < best.getHeuristicCost(best)) 
 				{
 					best = fringe.get(i);
 				}

@@ -14,7 +14,7 @@ public class BreadthFirstSearch extends Search
 	{
 		return "Breadth First Search";
 	}
-	
+
 	@Override
 	public boolean find(BoardState initialState, BoardState goalState) 
 	{
@@ -27,11 +27,8 @@ public class BreadthFirstSearch extends Search
 
 		while (!found && queue.size() != 0) 
 		{
-//			System.out.println("POP");
-//			System.out.println(queue.size());
-
 			BoardState currentState = queue.poll();
-//			System.out.println(queue.size());
+			//			System.out.println(queue.size());
 
 			if (!checkGoalState(currentState, goalState, pegsRemaining))
 			{
@@ -40,14 +37,12 @@ public class BreadthFirstSearch extends Search
 				if (!closed.contains(currentState)) 
 				{
 					closed.add(currentState);
-
 					for( int i = 0; i < currentState.children.size(); i++ )
 					{
 						queue.add(currentState.children.get(i));
 					}
 				}
-				System.out.println("Still searching... " + nodesExamined + " nodes expanded.");
-
+				//System.out.println("Still searching... " + nodesExamined + " nodes expanded.");
 			}
 			else
 			{
@@ -55,31 +50,9 @@ public class BreadthFirstSearch extends Search
 				Driver.printArray(currentState);
 				found = true; 
 			}
+			nodesExamined++; 
 		}
 		System.out.println(found);
 		return found;
 	}
-
-
-//	public List<Move> find(BoardState initialState, BoardState goalState) {
-//		queue.add(initialState);
-//		BoardState previous = initialState;
-//		while (!queue.isEmpty()) {
-//			BoardState current = queue.poll();
-//			expand(current);
-//			if (!current.equals(initialState)) {
-//				Move move = new Move(previous, current);
-//				moves.add(move);
-//			}
-//			if (current.getChildren().size() == 0) {
-//				return moves;
-//			} else if (!closed.contains(current)) {
-//				closed.add(current);
-//				for (BoardState child : current.getChildren()) {
-//					queue.add(child);
-//				}
-//			}
-//		}
-//		return moves;
-//	}
 }

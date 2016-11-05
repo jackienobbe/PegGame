@@ -5,7 +5,7 @@ public class Heuristic {
 	{
 		int value = 0;
 		int manDistance = 0;
-	
+
 		for (int i = 0; i < board.getPegPositions().length; i++) 
 		{
 			for (int j = 0; j < board.getPegPositions()[i].length; j++) 
@@ -19,5 +19,47 @@ public class Heuristic {
 			}
 		}
 		return value;
+	}
+	public static int weightedCost(BoardState board) 
+	{
+		int[][] costMatrix =  new int[][]{ 
+			{ 0, 0, 4, 0, 4, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 4, 0, 3, 0, 3, 0, 4 },
+			{ 0, 0, 0, 1, 0, 0, 0 }, 
+			{ 4, 0, 3, 0, 3, 0, 4 },
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 4, 0, 4, 0, 0 }}; 
+		return evaluateCostMatrix(board, costMatrix);
+	}
+
+	private static int evaluateCostMatrix(BoardState board, int[][] costMatrix) 
+	{
+		int boardCost = 0;
+		for (int i = 0; i < board.getPegPositions().length; i++) 
+		{
+			for (int j = 0; j < board.getPegPositions()[i].length; j++) 
+			{
+				if (board.getPegPositions()[i][j] == 1) 
+				{
+					boardCost += costMatrix[i][j];
+				}
+			}
+		}
+		return boardCost;
+	}
+
+
+	public BoardState symmetricTransform( BoardState board )
+	{
+
+		for (int i = 0; i < board.getPegPositions().length; i++) 
+		{
+			for (int j = 0; j < board.getPegPositions()[i].length; j++) 
+			{
+
+			}
+		}
+		return board;
 	}
 }

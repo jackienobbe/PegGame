@@ -23,6 +23,7 @@ public class DepthFirstSearch extends Search
 		while (!found && !stack.empty()) 
 		{
 			BoardState currentState = stack.pop();
+			//Driver.printArray(currentState);
 			//System.out.println(currentState); 
 			if (!checkGoalState(currentState, goalState, pegsRemaining))
 			{
@@ -45,11 +46,7 @@ public class DepthFirstSearch extends Search
 				found = true; 
 			}				
 			nodesExamined++; 
-//			if (nodesExamined % 1000 == 0)
-//			{
-//				Driver.printArray(currentState);
-//			}
-			System.out.println("Still searching... " + nodesExamined + " nodes examined.");
+			//System.out.println("Still searching... " + nodesExamined + " nodes examined.");
 
 		}
 		System.out.println(found);
