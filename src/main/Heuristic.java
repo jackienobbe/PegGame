@@ -6,11 +6,11 @@ public class Heuristic {
 		int value = 0;
 		int manDistance = 0;
 
-		for (int i = 0; i < board.getPegPositions().length; i++) 
+		for (int i = 0; i < board.getBoardState().length; i++) 
 		{
-			for (int j = 0; j < board.getPegPositions()[i].length; j++) 
+			for (int j = 0; j < board.getBoardState()[i].length; j++) 
 			{
-				if( board.getPegPositions()[i][j] == 1 )
+				if( board.getBoardState()[i][j] == 1 )
 				{
 					manDistance = Math.abs(i - Search.getGoalPosition()[0]) + Math.abs(j - Search.getGoalPosition()[1]);
 					value += manDistance;
@@ -36,11 +36,11 @@ public class Heuristic {
 	private static int evaluateCostMatrix(BoardState board, int[][] costMatrix) 
 	{
 		int boardCost = 0;
-		for (int i = 0; i < board.getPegPositions().length; i++) 
+		for (int i = 0; i < board.getBoardState().length; i++) 
 		{
-			for (int j = 0; j < board.getPegPositions()[i].length; j++) 
+			for (int j = 0; j < board.getBoardState()[i].length; j++) 
 			{
-				if (board.getPegPositions()[i][j] == 1) 
+				if (board.getBoardState()[i][j] == 1) 
 				{
 					boardCost += costMatrix[i][j];
 				}
@@ -53,9 +53,9 @@ public class Heuristic {
 	public BoardState symmetricTransform( BoardState board )
 	{
 
-		for (int i = 0; i < board.getPegPositions().length; i++) 
+		for (int i = 0; i < board.getBoardState().length; i++) 
 		{
-			for (int j = 0; j < board.getPegPositions()[i].length; j++) 
+			for (int j = 0; j < board.getBoardState()[i].length; j++) 
 			{
 
 			}

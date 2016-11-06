@@ -10,12 +10,12 @@ public class Driver
 	{
 		//System.out.println("checkMoveRight: y" + i + ", x" + j );
 		// check if move will be out of bounds
-		if ( j < board.getPegPositions().length - JUMP_SIZE)
+		if ( j < board.getBoardState().length - JUMP_SIZE)
 		{
 			// check that pegs exist in the correct positions
-			if( board.getPegPositions()[i][j] == 0 && 
-					board.getPegPositions()[i][j + 1] == 1 && 
-					board.getPegPositions()[i][j + 2] == 1 )
+			if( board.getBoardState()[i][j] == 0 && 
+					board.getBoardState()[i][j + 1] == 1 && 
+					board.getBoardState()[i][j + 2] == 1 )
 			{
 				return true; 
 			}
@@ -29,9 +29,9 @@ public class Driver
 		if ( j > BOARD_LEFT_BOUNDARY )
 		{
 			// check that pegs exist in the correct positions
-			if( board.getPegPositions()[i][j] == 0 && 
-					board.getPegPositions()[i][j - 1] == 1 && 
-					board.getPegPositions()[i][j - 2] == 1 )
+			if( board.getBoardState()[i][j] == 0 && 
+					board.getBoardState()[i][j - 1] == 1 && 
+					board.getBoardState()[i][j - 2] == 1 )
 			{
 				return true; 
 			}
@@ -44,9 +44,9 @@ public class Driver
 		if ( i > BOARD_UP_BOUNDARY)
 		{
 			// check that pegs exist in the correct positions
-			if( board.getPegPositions()[i][j] == 0 && 
-					board.getPegPositions()[i - 1][j] == 1 && 
-					board.getPegPositions()[i - 2][j] == 1 )
+			if( board.getBoardState()[i][j] == 0 && 
+					board.getBoardState()[i - 1][j] == 1 && 
+					board.getBoardState()[i - 2][j] == 1 )
 			{
 				return true; 
 			}
@@ -57,12 +57,12 @@ public class Driver
 	{
 		//System.out.println("checkMoveDown: y" + i + ", x" + j );
 		// check if move will be out of bounds
-		if ( i < board.getPegPositions().length - JUMP_SIZE )
+		if ( i < board.getBoardState().length - JUMP_SIZE )
 		{
 			// check that pegs exist in the correct positions
-			if( board.getPegPositions()[i][j] == 0 && 
-					board.getPegPositions()[i + 1][j] == 1 && 
-					board.getPegPositions()[i + 2][j] == 1 )
+			if( board.getBoardState()[i][j] == 0 && 
+					board.getBoardState()[i + 1][j] == 1 && 
+					board.getBoardState()[i + 2][j] == 1 )
 			{
 				return true; 
 			}
@@ -72,33 +72,33 @@ public class Driver
 
 	public static BoardState movePegRight( BoardState board, int i, int j ) 
 	{
-		board.getPegPositions()[i][j] = 1; 
-		board.getPegPositions()[i][j + 1] = 0; 
-		board.getPegPositions()[i][j + 2] = 0; 		
+		board.getBoardState()[i][j] = 1; 
+		board.getBoardState()[i][j + 1] = 0; 
+		board.getBoardState()[i][j + 2] = 0; 		
 
 		return board;
 	}
 	public static BoardState movePegLeft(BoardState board, int i, int j)
 	{
-		board.getPegPositions()[i][j] = 1; 
-		board.getPegPositions()[i][j - 1] = 0; 
-		board.getPegPositions()[i][j - 2] = 0; 		
+		board.getBoardState()[i][j] = 1; 
+		board.getBoardState()[i][j - 1] = 0; 
+		board.getBoardState()[i][j - 2] = 0; 		
 
 		return board; 
 	}
 	public static BoardState movePegUp( BoardState board, int i, int j ) 
 	{
-		board.getPegPositions()[i][j] = 1; 
-		board.getPegPositions()[i - 1][j] = 0; 
-		board.getPegPositions()[i - 2][j] = 0; 		
+		board.getBoardState()[i][j] = 1; 
+		board.getBoardState()[i - 1][j] = 0; 
+		board.getBoardState()[i - 2][j] = 0; 		
 
 		return board; 
 	}
 	public static BoardState movePegDown( BoardState board, int i, int j ) 
 	{
-		board.getPegPositions()[i][j] = 1; 
-		board.getPegPositions()[i + 1][j] = 0; 
-		board.getPegPositions()[i + 2][j] = 0; 		
+		board.getBoardState()[i][j] = 1; 
+		board.getBoardState()[i + 1][j] = 0; 
+		board.getBoardState()[i + 2][j] = 0; 		
 
 		return board; 
 	}
@@ -106,11 +106,11 @@ public class Driver
 	public static void printArray( BoardState board )
 	{
 		System.out.println("------------------------"); 
-		for (int k = 0; k < board.getPegPositions().length; k++)
+		for (int k = 0; k < board.getBoardState().length; k++)
 		{
-			for (int g = 0; g < board.getPegPositions()[k].length; g++)
+			for (int g = 0; g < board.getBoardState()[k].length; g++)
 			{
-				System.out.print(board.getPegPositions()[k][g] + " ");
+				System.out.print(board.getBoardState()[k][g] + " ");
 			}
 			System.out.println(" ");
 		}	

@@ -9,8 +9,6 @@ public abstract class BoardState
 	List<BoardState> children = new LinkedList<BoardState>();
 	//private int branchingFactor;
 
-	
-
 	public List<BoardState> expand(BoardState board)
 	{
 		return children;
@@ -63,6 +61,16 @@ public abstract class BoardState
 	{
 		int heuristicCost = Heuristic.weightedCost(board); 
 		return heuristicCost;
+	}
+
+	public int[][] getBoardState() 
+	{
+		return null;
+	}
+
+	public int getPegsRemaining( BoardState board ) 
+	{
+		return 7;
 	}
 
 }

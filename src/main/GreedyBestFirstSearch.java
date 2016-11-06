@@ -36,7 +36,9 @@ public class GreedyBestFirstSearch extends Search
 				if(!closed.contains(best))
 				{
 					best.expand(best);
-					closed.add(best);
+					closed(pegsRemaining).add(best);
+					System.out.println(closed);
+
 
 					//best.setPathCost(best.getPathCost() + 1);
 					for( int i = 0; i < best.children.size(); i++ )

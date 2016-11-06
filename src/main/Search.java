@@ -1,33 +1,29 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public abstract class Search 
 {
-	protected List<BoardState> closed = new LinkedList<BoardState>();
+	@SuppressWarnings("unchecked")
+	//List<List<BoardState>> closed = new ArrayList<List<BoardState>>(33);
+	//protected Vector<BoardState>[] closed = new Vector[39]; // LinkedList<BoardState>();
+	//public List<BoardState>[] closed = [39];
+	ArrayList<BoardState>[] closed = (ArrayList<BoardState>[]) new ArrayList[39];
 	protected static List<BoardState> fringe = new LinkedList<BoardState>();
 
-	static int pegsRemaining;// = 0; 
+	static int pegsRemaining; 
 	static int nodesExamined = 0;
 	public static int[] goalPosition = new int[2]; 
 
-//	void setGoalPosition(BoardState goalState)
-//	{
-//		for (int i = 0; i < goalState.getPegPositions().length; i++ )
-//		{
-//			for(int j = 0; j < goalState.getPegPositions()[i].length; j++)
-//			{
-//				if(goalState.getPegPositions()[i][j] == 1)
-//				{
-//					goalPosition[0] = i; 
-//					goalPosition[1] = j; 
-//					//System.out.println(i + " " + j);
-//				}
-//			}
-//		}
-//		//System.out.println("HERE " + goalState.getPegPositions().length); 
-//	}	
+	public void initializeClosed()
+	{
+		for(int i = 0; i < closed.length; i++)
+		{
+			closed[i] = new ArrayList<BoardState>();
+		}		
+	}
 	static int[] getGoalPosition()
 	{
 		return goalPosition; 
@@ -48,18 +44,18 @@ public abstract class Search
 	//		}
 	//return currentBoard.children;
 
-	public boolean checkGoalState( BoardState board, BoardState goalState, int pegsRemaining )
+	public boolean checkGoalState( BoardState board, BoardState goalState )
 	{
-		if ( pegsRemaining == 1)
+		if (board.getPegsRemaining(board) == 1)
 		{
 			System.out.println("Wiennnerrrrrr");
 			return true; 
 		}
-		for( int i = 0; i < board.getPegPositions().length; i++ )
+		for( int i = 0; i < board.getBoardState().length; i++ )
 		{
-			for( int j = 0; j < board.getPegPositions()[i].length; j++ )
+			for( int j = 0; j < board.getBoardState()[i].length; j++ )
 			{
-				if( board.getPegPositions()[i][j] != goalState.getPegPositions()[i][j])
+				if( board.getBoardState()[i][j] != goalState.getBoardState()[i][j])
 				{
 					//System.out.println("NOT GOAL");
 					return false; 

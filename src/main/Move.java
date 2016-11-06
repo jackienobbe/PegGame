@@ -25,12 +25,12 @@ public class Move
 	private int[] findMove()
 	{
 		int[] move = new int[4];
-		for(int i = 0; i < initialState.getPegPositions().length; i++)
+		for(int i = 0; i < initialState.getBoardState().length; i++)
 		{
-			for(int j = 0; j < initialState.getPegPositions()[i].length; j++)
+			for(int j = 0; j < initialState.getBoardState()[i].length; j++)
 			{
-				int initialPeg = initialState.getPegPositions()[i][j];
-				int finalPeg = finalState.getPegPositions()[i][j];
+				int initialPeg = initialState.getBoardState()[i][j];
+				int finalPeg = finalState.getBoardState()[i][j];
 
 				if(initialPeg != finalPeg && initialPeg == 1)
 				{
