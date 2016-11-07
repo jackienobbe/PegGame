@@ -30,11 +30,8 @@ public class PegSolBoardState extends BoardState
 			{
 				if(currentBoard.getBoardState()[i][j] == 0)
 				{
-					
-					if(checkZeroMoveUp( currentBoard, i, j ))
+					if(checkZeroMoveDown( currentBoard, i, j ))
 					{						
-						//System.out.println("here"); 
-
 						int[][] newPegs = new int[currentBoard.getBoardState().length][currentBoard.getBoardState().length];
 						for( int g = 0; g < currentBoard.getBoardState().length; g++)
 						{
@@ -45,13 +42,14 @@ public class PegSolBoardState extends BoardState
 						}
 						BoardState child = new PegSolBoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
 
-						child = movePegUp( child, i, j ); 
+						child = movePegDown( child, i, j ); 
 						currentBoard.children.add(child);
 						child.parent = currentBoard; 
 
-//						System.out.println("Move UP"); 
+//						System.out.println("Move down"); 
 //						Driver.printArray(child);
 					}
+					
 					if(checkZeroMoveRight( currentBoard, i, j ))
 					{				
 						int[][] newPegs = new int[currentBoard.getBoardState().length][currentBoard.getBoardState().length];
@@ -92,8 +90,10 @@ public class PegSolBoardState extends BoardState
 //						System.out.println("Move left"); 
 //						Driver.printArray(child);
 					}
-					if(checkZeroMoveDown( currentBoard, i, j ))
+					if(checkZeroMoveUp( currentBoard, i, j ))
 					{						
+						//System.out.println("here"); 
+
 						int[][] newPegs = new int[currentBoard.getBoardState().length][currentBoard.getBoardState().length];
 						for( int g = 0; g < currentBoard.getBoardState().length; g++)
 						{
@@ -104,11 +104,11 @@ public class PegSolBoardState extends BoardState
 						}
 						BoardState child = new PegSolBoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
 
-						child = movePegDown( child, i, j ); 
+						child = movePegUp( child, i, j ); 
 						currentBoard.children.add(child);
 						child.parent = currentBoard; 
 
-//						System.out.println("Move down"); 
+//						System.out.println("Move UP"); 
 //						Driver.printArray(child);
 					}
 				}
@@ -218,7 +218,6 @@ public class PegSolBoardState extends BoardState
 		return board; 
 	}
 
-	@Override
 	public int getIndex(BoardState board)
 	{
 		int pegsRemaining = 0; 
@@ -253,9 +252,6 @@ public class PegSolBoardState extends BoardState
 				}
 			}
 		}
-		System.out.println("GOOOOALLLLLLLL");
-		Driver.printArray(board);
-
 		return true; 
 	}
 	public boolean equals(Object o)

@@ -79,11 +79,11 @@ public class Main
 		//		}
 
 
-		DepthFirstSearch dfs = new DepthFirstSearch();  
-		dfs.find(initialBoardState, goalBoardState); 
+//		DepthFirstSearch dfs = new DepthFirstSearch();  
+//		dfs.find(initialBoardState, goalBoardState); 
 
-		//		BreadthFirstSearch bfs = new BreadthFirstSearch();  
-		//		bfs.find(initialBoardState, goalBoardState); 
+				BreadthFirstSearch bfs = new BreadthFirstSearch();  
+				bfs.find(initialBoardState, goalBoardState); 
 
 		//		GreedyBestFirstSearch gbf = new GreedyBestFirstSearch(); 
 		//		gbf.setGoalPosition(goalBoardState); 

@@ -37,8 +37,6 @@ public abstract class BoardState
 	{
 		return 0;  //pathCost++; 
 	}
-
-	
 	public int getHeuristicCost(BoardState board) 
 	{
 		int heuristicCost = Heuristic.getHeuristicCost(board); 
@@ -50,19 +48,8 @@ public abstract class BoardState
 		return null;
 	}
 
-	/***
-	 * Gets the index value for a 
-	 * @param board
-	 * @return returns int
-	 */
-	public int getIndex( BoardState board ) 
-	{
-		return 7;
-	}
-
-	public boolean checkGoalState(BoardState currentState, BoardState goalState) 
-	{
+	public boolean checkGoalState(BoardState currentState, BoardState goalState) {
+		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

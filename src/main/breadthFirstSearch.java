@@ -19,7 +19,8 @@ public class BreadthFirstSearch extends Search
 	public boolean find(BoardState initialState, BoardState goalState) 
 	{
 		boolean found = false;
-
+		BoardState currentState = null; 
+		
 		queue.add(initialState);
 
 		System.out.println("Searching... ");
@@ -33,7 +34,7 @@ public class BreadthFirstSearch extends Search
 				System.out.println("Still searching BFS... ");
 			}
 			
-			BoardState currentState = queue.poll();
+			currentState = queue.poll();
 			if (!currentState.checkGoalState(currentState, goalState))
 			{
 				if (!closed.contains(currentState)) 
@@ -56,27 +57,10 @@ public class BreadthFirstSearch extends Search
 			else // SOLUTION FOUND!
 			{
 				found = true; 
-				
-				System.out.println("Path backwards to Initial State:");
-				System.out.println("--------------------------------");
-
-				while(currentState != null)
-				{
-					Driver.printArray(currentState);
-					currentState = currentState.parent;
-				}
-				System.out.println("^^ Path to Goal State!");
-
 			}
 			nodesExamined++; 
 		}
-		System.out.println("SEARCH STATS:");
-		System.out.println("--------------------------------");
-		System.out.println("Search used: Depth First Search");
-		System.out.println("Solution found:" + found);
-		System.out.println("Nodes Expanded: " + nodesExamined);
-		System.out.println("Loops Detected: " + getLoopsDetected());
-		
+		printSolution(currentState, found);
 		return found;
 	}
 }

@@ -44,7 +44,7 @@ public abstract class Search
 		loopDetectionCount++; 
 		if (loopDetectionCount % 10000 == 0)
 		{
-			System.out.println("Loop detected! " + loopDetectionCount + "+ loops detected.");
+			System.out.println("Loops detected! " + loopDetectionCount + "+ loops detected.");
 		}
 	}
 	public int getLoopsDetected()
@@ -53,5 +53,30 @@ public abstract class Search
 	}
 
 	public abstract boolean find(BoardState initialState, BoardState goalState);
+	public void printSolution(BoardState board, boolean found)
+	{
+		System.out.println("SEARCH STATS:");
+		System.out.println("--------------------------------");
+		System.out.println("Search used:");
+		System.out.println("Solution found: " + found);
+		System.out.println("Nodes Expanded: " + nodesExamined);
+		System.out.println("Loops Detected: " + getLoopsDetected());
+		
+		
+		List<BoardState> solution = new LinkedList<BoardState>(); 
+		// follow parents to find solution
+		while(board != null)
+		{		
+			solution.add(board);
+			board = board.parent;
+		}
+		
+		System.out.println(" ");
+		System.out.println("Solution Path:");
+		for(int i = solution.size() -1; i >= 0; i--)
+		{
+			Driver.printArray(solution.get(i));
+		}
+	}
 }
 

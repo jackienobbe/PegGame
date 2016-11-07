@@ -15,7 +15,8 @@ public class DepthFirstSearch extends Search
 	{
 		System.out.println("Searching... ");
 		boolean found = false;
-
+		BoardState currentState = null;
+		
 		stack.push(initialState);
 		while (!found && !stack.empty()) 
 		{
@@ -26,7 +27,7 @@ public class DepthFirstSearch extends Search
 				System.out.println("Still searching DFS... ");
 			}
 			
-			BoardState currentState = stack.pop();
+			currentState = stack.pop();
 			if (!currentState.checkGoalState(currentState, goalState))
 			{
 				if (!closed.contains(currentState)) 
@@ -42,34 +43,17 @@ public class DepthFirstSearch extends Search
 				}
 				else
 				{
+					//Found on closed list, so increment number of loops detected
 					loopDetectionCount();
 				}	
 			}
-
-			else
+			else // SOLUTION FOUND!
 			{
 				found = true; 
-
-				System.out.println("Path backwards to Initial State:");
-				System.out.println("--------------------------------");
-
-				while(currentState != null)
-				{
-					Driver.printArray(currentState);
-					currentState = currentState.parent;
-				}
-				System.out.println("^^ Path to Goal State!");
-
 			}		
 			nodesExamined++; 
 		}
-		System.out.println("SEARCH STATS:");
-		System.out.println("--------------------------------");
-		System.out.println("Search used: Depth First Search");
-		System.out.println("Solution found:" + found);
-		System.out.println("Nodes Expanded: " + nodesExamined);
-		System.out.println("Loops Detected: " + getLoopsDetected());
-		
+		printSolution(currentState, found); 
 		return found;
 	}
 }
