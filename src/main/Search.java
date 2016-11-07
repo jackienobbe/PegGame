@@ -53,30 +53,36 @@ public abstract class Search
 	}
 
 	public abstract boolean find(BoardState initialState, BoardState goalState);
+	@SuppressWarnings("null")
 	public void printSolution(BoardState board, boolean found)
 	{
+		System.out.println(" ");
 		System.out.println("SEARCH STATS:");
 		System.out.println("--------------------------------");
 		System.out.println("Search used:");
 		System.out.println("Solution found: " + found);
 		System.out.println("Nodes Expanded: " + nodesExamined);
 		System.out.println("Loops Detected: " + getLoopsDetected());
-		
-		
-		List<BoardState> solution = new LinkedList<BoardState>(); 
-		// follow parents to find solution
-		while(board != null)
-		{		
-			solution.add(board);
-			board = board.parent;
-		}
-		
-		System.out.println(" ");
-		System.out.println("Solution Path:");
-		for(int i = solution.size() -1; i >= 0; i--)
+
+		if(found)
 		{
-			Driver.printArray(solution.get(i));
+			List<BoardState> solution = new LinkedList<BoardState>(); 
+			// follow parents to find solution
+			while(board != null)
+			{		
+				solution.add(board);
+				board = board.parent;
+			}
+
+			System.out.println(" ");
+			System.out.println("Solution Path:");
+			for(int i = solution.size()-2; i >= 0; i--)
+			{
+				System.out.println("(" + ((MCBoardState)board).getMissionaries() + ", " + ((MCBoardState) board).getCannibals()  + ", " + ((MCBoardState) board).getBoat() + ")" ); 
+				//Driver.printArray(solution.get(i));
+			}
 		}
+
 	}
 }
 

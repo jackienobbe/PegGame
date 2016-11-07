@@ -26,10 +26,14 @@ public class DepthFirstSearch extends Search
 				System.out.println(nodesExamined + " nodes examined. ");
 				System.out.println("Still searching DFS... ");
 			}
-			
+			//System.out.println(currentState);
 			currentState = stack.pop();
+			//System.out.println("Canns: " + ((MCBoardState) currentState).getCannibals());
+
 			if (!currentState.checkGoalState(currentState, goalState))
 			{
+				//System.out.println("next tgought");
+
 				if (!closed.contains(currentState)) 
 				{
 					currentState.expand(currentState);
