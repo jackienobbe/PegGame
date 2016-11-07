@@ -68,9 +68,19 @@ public abstract class BoardState
 		return null;
 	}
 
-	public int getPegsRemaining( BoardState board ) 
+	/***
+	 * Gets the index value for a 
+	 * @param board
+	 * @return returns int
+	 */
+	public int getIndex( BoardState board ) 
 	{
 		return 7;
+	}
+
+	public boolean checkGoalState(BoardState currentState, BoardState goalState) 
+	{
+		return false;
 	}
 
 }

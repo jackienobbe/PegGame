@@ -44,27 +44,7 @@ public abstract class Search
 	//		}
 	//return currentBoard.children;
 
-	public boolean checkGoalState( BoardState board, BoardState goalState )
-	{
-		if (board.getPegsRemaining(board) == 1)
-		{
-			System.out.println("Wiennnerrrrrr");
-			return true; 
-		}
-		for( int i = 0; i < board.getBoardState().length; i++ )
-		{
-			for( int j = 0; j < board.getBoardState()[i].length; j++ )
-			{
-				if( board.getBoardState()[i][j] != goalState.getBoardState()[i][j])
-				{
-					//System.out.println("NOT GOAL");
-					return false; 
-				}
-			}
-		}
-		System.out.println("GOOOOALLLLLLLL");
-		return true; 
-	}
+	
 	public abstract boolean find(BoardState initialState, BoardState goalState);
 }
 
