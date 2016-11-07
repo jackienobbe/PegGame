@@ -18,7 +18,6 @@ public class BreadthFirstSearch extends Search
 	@Override
 	public boolean find(BoardState initialState, BoardState goalState) 
 	{
-		System.out.println("Howdy."); 
 		boolean found = false;
 
 		queue.add(initialState);
@@ -27,16 +26,22 @@ public class BreadthFirstSearch extends Search
 
 		while (!found && queue.size() != 0) 
 		{
-			BoardState currentState = queue.poll();
-			//			System.out.println(queue.size());
-
-			if (!checkGoalState(currentState, goalState, pegsRemaining))
+			//print every time a 10000th node is examined
+			if (nodesExamined % 10000 == 0)
 			{
-				expand(currentState);
-
+				System.out.println(nodesExamined + " nodes examined. ");
+				System.out.println("Still searching BFS... ");
+			}
+			
+			BoardState currentState = queue.poll();
+			if (!currentState.checkGoalState(currentState, goalState))
+			{
 				if (!closed.contains(currentState)) 
 				{
+					currentState.expand(currentState);
 					closed.add(currentState);
+					
+					//add children to queue
 					for( int i = 0; i < currentState.children.size(); i++ )
 					{
 						queue.add(currentState.children.get(i));
@@ -44,20 +49,34 @@ public class BreadthFirstSearch extends Search
 				}
 				else
 				{
+					//Found on closed list, so increment number of loops detected
 					loopDetectionCount();
 				}
-
-				//System.out.println("Still searching... " + nodesExamined + " nodes expanded.");
 			}
-			else
+			else // SOLUTION FOUND!
 			{
-				System.out.println("FOUND");
-				Driver.printArray(currentState);
 				found = true; 
+				
+				System.out.println("Path backwards to Initial State:");
+				System.out.println("--------------------------------");
+
+				while(currentState != null)
+				{
+					Driver.printArray(currentState);
+					currentState = currentState.parent;
+				}
+				System.out.println("^^ Path to Goal State!");
+
 			}
 			nodesExamined++; 
 		}
-		System.out.println(found);
+		System.out.println("SEARCH STATS:");
+		System.out.println("--------------------------------");
+		System.out.println("Search used: Depth First Search");
+		System.out.println("Solution found:" + found);
+		System.out.println("Nodes Expanded: " + nodesExamined);
+		System.out.println("Loops Detected: " + getLoopsDetected());
+		
 		return found;
 	}
 }

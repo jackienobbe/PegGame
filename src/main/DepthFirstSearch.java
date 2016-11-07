@@ -13,45 +13,63 @@ public class DepthFirstSearch extends Search
 	}
 	public boolean find(BoardState initialState, BoardState goalState) 
 	{
-		initializeClosed(); 
-		//pegsRemaining = initialState.getPegsRemaining(initialState); 
 		System.out.println("Searching... ");
 		boolean found = false;
 
 		stack.push(initialState);
 		while (!found && !stack.empty()) 
 		{
-			System.out.println("Still searching... " + nodesExamined + " nodes examined.");
-
+			//print every time a 10000th node is examined
+			if (nodesExamined % 10000 == 0)
+			{
+				System.out.println(nodesExamined + " nodes examined. ");
+				System.out.println("Still searching DFS... ");
+			}
+			
 			BoardState currentState = stack.pop();
-			currentState.getIndex(currentState);
- 
 			if (!currentState.checkGoalState(currentState, goalState))
 			{
-				if (!closed[currentState.getIndex(currentState)].contains(currentState)) 
+				if (!closed.contains(currentState)) 
 				{
 					currentState.expand(currentState);
-					closed[currentState.getIndex(currentState)].add(currentState);
-
+					closed.add(currentState);
+					
+					//add children to queue
 					for( int i = 0; i < currentState.children.size(); i++ )
 					{
-						stack.push(currentState.children.get(i));
+						stack.add(currentState.children.get(i));
 					}
 				}
 				else
 				{
 					loopDetectionCount();
-				}
+				}	
 			}
+
 			else
 			{
-				System.out.println("FOUND");
 				found = true; 
+
+				System.out.println("Path backwards to Initial State:");
+				System.out.println("--------------------------------");
+
+				while(currentState != null)
+				{
+					Driver.printArray(currentState);
+					currentState = currentState.parent;
+				}
+				System.out.println("^^ Path to Goal State!");
+
 			}		
 			nodesExamined++; 
 		}
-		System.out.println(found);
+		System.out.println("SEARCH STATS:");
+		System.out.println("--------------------------------");
+		System.out.println("Search used: Depth First Search");
+		System.out.println("Solution found:" + found);
+		System.out.println("Nodes Expanded: " + nodesExamined);
+		System.out.println("Loops Detected: " + getLoopsDetected());
+		
 		return found;
 	}
-	
 }

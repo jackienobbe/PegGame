@@ -14,6 +14,8 @@ public class MCBoardState extends BoardState
 	private int boat;
 	private int boatCapacity = 2; 
 
+	private int branchingFactor; 
+	
 	int[] boardState = new int[3];
 	int[] initialBoardState = new int[] {3,3,1}; 
 
@@ -34,6 +36,11 @@ public class MCBoardState extends BoardState
 	 * This method initializes the possible moves
 	 * for the inputed initial game state and game
 	 * constraints. 
+	 * 
+	 * NOTE: This method could be improved by spawning
+	 * possible moves based on a game board of varying 
+	 * sizes. This one only accounts for the start state
+	 * of 3 Missionaries, 3 Cannibals, and a 2 person boat.
 	 ***************************/
 	public void initializePossibleMoves()
 	{
@@ -47,33 +54,33 @@ public class MCBoardState extends BoardState
 	/***************************
 	 * This method spawns new states to explore from the possible moves
 	 * from the given state. The "successor" function.
-	 * @param board is a current game state to find next moves
+	 * @param currentBoard is a current game state to find next moves
 	 * @return List of BoardStates containing the next possible moves
 	 ***************************/
-	public List<BoardState> expand( BoardState board )
+	public List<BoardState> expand( BoardState currentBoard )
 	{
 		for (int i = 0; i < initialBoardState.length; i++)
 		{
 			System.out.println("BoardState[" + i + "] " + boardState[i]); 
 		}		for( int i = 0; i < possibleMoves.size(); i++ )
 		{
-			if(possibleMoves.get(i)[MISSIONARIES] <= ((MCBoardState) board).getMissionaries() &&
-					possibleMoves.get(i)[CANNIBALS] <= ((MCBoardState) board).getCannibals())
+			if(possibleMoves.get(i)[MISSIONARIES] <= ((MCBoardState) currentBoard).getMissionaries() &&
+					possibleMoves.get(i)[CANNIBALS] <= ((MCBoardState) currentBoard).getCannibals())
 			{
 				BoardState child = new MCBoardState(boardState, 1);  //currentBoard.getPathCost() + 1);
-				if(((MCBoardState) board).getBoat() == 0)
+				if(((MCBoardState) currentBoard).getBoat() == 0)
 				{
 					child = addPossibleMove((MCBoardState) child, i); 
 					System.out.println(child); 
 				}
-				if(((MCBoardState) board).getBoat() == 1)
+				if(((MCBoardState) currentBoard).getBoat() == 1)
 				{
 					child = subtractPossibleMove((MCBoardState) child, i); 
 					System.out.println(child); 
 				}
 				if(isValid((MCBoardState) child))
 				{
-					board.children.add(child);
+					currentBoard.children.add(child);
 				}
 			}
 		}

@@ -5,18 +5,18 @@ import java.util.List;
 
 public abstract class BoardState
 {
-
 	List<BoardState> children = new LinkedList<BoardState>();
-	//private int branchingFactor;
+	private int branchingFactor;
+	BoardState parent = null; 
 
 	public List<BoardState> expand(BoardState board)
 	{
 		return children;
 	}
 	
-	public void setBranchingFactor()
+	public void setBranchingFactor(BoardState board)
 	{
-		
+		board.branchingFactor = board.children.size(); 
 	};
 
 	public void setBoardState( int[][] newBoard, BoardState board)
@@ -38,28 +38,10 @@ public abstract class BoardState
 		return 0;  //pathCost++; 
 	}
 
-	public boolean equals(Object o)
-	{
-		if(o instanceof BoardState)
-		{
-//			BoardState board = (BoardState)o;
-//			for(int i = 0; i < board.getPegPositions().length; i++)
-//			{
-//				for(int j = 0; j < board.getPegPositions()[i].length; j++)
-//				{
-//					if(this.pegPositions[i][j] != board.getPegPositions()[i][j])
-//					{
-//						return false;
-//					}
-//				}
-//			}
-			return true;
-		}  
-		else return false; 
-	}
+	
 	public int getHeuristicCost(BoardState board) 
 	{
-		int heuristicCost = Heuristic.weightedCost(board); 
+		int heuristicCost = Heuristic.getHeuristicCost(board); 
 		return heuristicCost;
 	}
 

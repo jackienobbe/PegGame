@@ -31,10 +31,10 @@ public class PegSolHeuristic extends Heuristic
 			{ 4, 0, 3, 0, 3, 0, 4 },
 			{ 0, 0, 0, 0, 0, 0, 0 }, 
 			{ 0, 0, 4, 0, 4, 0, 0 }}; 
-			return evaluateCostMatrix(board, costMatrix);
+		return evaluateCost(board, costMatrix);
 	}
 
-	private static int evaluateCostMatrix(BoardState board, int[][] costMatrix) 
+	private static int evaluateCost(BoardState board, int[][] costMatrix) 
 	{
 		int boardCost = 0;
 		for (int i = 0; i < board.getBoardState().length; i++) 

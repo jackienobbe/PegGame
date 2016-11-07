@@ -6,11 +6,8 @@ import java.util.List;
 
 public abstract class Search 
 {
-	@SuppressWarnings("unchecked")
-	//List<List<BoardState>> closed = new ArrayList<List<BoardState>>(33);
-	//protected Vector<BoardState>[] closed = new Vector[39]; // LinkedList<BoardState>();
-	//public List<BoardState>[] closed = [39];
-	ArrayList<BoardState>[] closed = (ArrayList<BoardState>[]) new ArrayList[39];
+
+	public List<BoardState> closed = new LinkedList<BoardState>(); 
 	protected static List<BoardState> fringe = new LinkedList<BoardState>();
 
 	static int pegsRemaining; 
@@ -18,13 +15,6 @@ public abstract class Search
 	static int nodesExamined = 0;
 	public static int[] goalPosition = new int[2]; 
 
-	public void initializeClosed()
-	{
-		for(int i = 0; i < closed.length; i++)
-		{
-			closed[i] = new ArrayList<BoardState>();
-		}		
-	}
 	static int[] getGoalPosition()
 	{
 		return goalPosition; 
@@ -52,16 +42,16 @@ public abstract class Search
 	public void loopDetectionCount() 
 	{
 		loopDetectionCount++; 
-		if (loopDetectionCount == 1)
+		if (loopDetectionCount % 10000 == 0)
 		{
-			System.out.println("Loop detected. " + loopDetectionCount + " loop detected.");
-		}
-		else
-		{
-			System.out.println("Loop detected. " + loopDetectionCount + " loops detected.");
+			System.out.println("Loop detected! " + loopDetectionCount + "+ loops detected.");
 		}
 	}
-	
+	public int getLoopsDetected()
+	{
+		return loopDetectionCount; 
+	}
+
 	public abstract boolean find(BoardState initialState, BoardState goalState);
 }
 
