@@ -38,6 +38,10 @@ public class DepthFirstSearch extends Search
 						stack.push(currentState.children.get(i));
 					}
 				}
+				else
+				{
+					loopDetectionCount();
+				}
 			}
 			else
 			{
@@ -49,4 +53,5 @@ public class DepthFirstSearch extends Search
 		System.out.println(found);
 		return found;
 	}
+	
 }

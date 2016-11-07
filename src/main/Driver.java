@@ -2,7 +2,6 @@ package main;
 
 public class Driver 
 {
-
 	public static void printArray( BoardState board )
 	{
 		System.out.println("------------------------"); 
@@ -20,4 +19,6 @@ public class Driver
 	{
 		// Search.find(initial, null);
 	}
+	
+	
 }

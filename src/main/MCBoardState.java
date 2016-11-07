@@ -12,6 +12,7 @@ public class MCBoardState extends BoardState
 	private int cannibals;
 	private int missionaries;
 	private int boat;
+	private int boatCapacity = 2; 
 
 	int[] boardState = new int[3];
 	int[] initialBoardState = new int[] {3,3,1}; 
@@ -146,13 +147,17 @@ public class MCBoardState extends BoardState
 	{
 		return this.missionaries;
 	}
-	private int getCannibals() 
+	public int getCannibals() 
 	{
 		return cannibals; 
 	}
-	private int getBoat()
+	public int getBoat()
 	{
 		return boat;
+	}
+	public int getBoatCapacity()
+	{
+		return boatCapacity;
 	}
 
 }

@@ -42,6 +42,11 @@ public class BreadthFirstSearch extends Search
 						queue.add(currentState.children.get(i));
 					}
 				}
+				else
+				{
+					loopDetectionCount();
+				}
+
 				//System.out.println("Still searching... " + nodesExamined + " nodes expanded.");
 			}
 			else

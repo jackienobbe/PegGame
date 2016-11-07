@@ -14,6 +14,7 @@ public abstract class Search
 	protected static List<BoardState> fringe = new LinkedList<BoardState>();
 
 	static int pegsRemaining; 
+	int loopDetectionCount; 
 	static int nodesExamined = 0;
 	public static int[] goalPosition = new int[2]; 
 
@@ -44,6 +45,22 @@ public abstract class Search
 	//		}
 	//return currentBoard.children;
 
+	/*** 
+	 * This method increments the loop detection counter, and prints 
+	 * the total number of detected loops.
+	 */
+	public void loopDetectionCount() 
+	{
+		loopDetectionCount++; 
+		if (loopDetectionCount == 1)
+		{
+			System.out.println("Loop detected. " + loopDetectionCount + " loop detected.");
+		}
+		else
+		{
+			System.out.println("Loop detected. " + loopDetectionCount + " loops detected.");
+		}
+	}
 	
 	public abstract boolean find(BoardState initialState, BoardState goalState);
 }
