@@ -6,18 +6,17 @@ import java.util.List;
 public abstract class BoardState
 {
 	List<BoardState> children = new LinkedList<BoardState>();
-	private int branchingFactor;
-	BoardState parent = null; 
+	//private int branchingFactor;
+	public enum gameType {MC, PegSol}; 
+	BoardState parent = null;
+	public int pathCost; 
 
-	public List<BoardState> expand(BoardState board)
-	{
-		return children;
-	}
-	
-	public void setBranchingFactor(BoardState board)
-	{
-		board.branchingFactor = board.children.size(); 
-	};
+//	public void setBranchingFactor(BoardState board)
+//	{
+//		board.branchingFactor = board.children.size(); 
+//	};
+
+	//public abstract void getBoardState(); 
 
 	public void setBoardState( int[][] newBoard, BoardState board)
 	{
@@ -33,23 +32,19 @@ public abstract class BoardState
 	{
 		return children;
 	}
-	public int incrementPathCost()
+	public int incrementPathCost(BoardState board)
 	{
-		return 0;  //pathCost++; 
+		return board.pathCost++; 
 	}
-	public int getHeuristicCost(BoardState board) 
+	public int getPathCost(BoardState board) 
 	{
-		int heuristicCost = Heuristic.getHeuristicCost(board); 
-		return heuristicCost;
+		System.out.println(board.pathCost);
+		return board.pathCost;
 	}
-
-	public int[][] getBoardState() 
-	{
-		return null;
-	}
-
-	public boolean checkGoalState(BoardState currentState, BoardState goalState) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public abstract int getHeuristicCost(BoardState board); 
+	public abstract List<BoardState> expand(BoardState board);
+	public abstract boolean checkGoalState(BoardState currentState, BoardState goalState);
+	public abstract void printState(BoardState board);
+	public abstract int getHeuristicValue(BoardState board);
+	
 }

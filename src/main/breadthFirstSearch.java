@@ -60,6 +60,8 @@ public class BreadthFirstSearch extends Search
 			}
 			nodesExamined++; 
 		}
+		System.out.println(" ");
+		System.out.println("BREADTH FIRST SEARCH STATS:");
 		printSolution(currentState, found);
 		return found;
 	}

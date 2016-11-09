@@ -1,12 +1,11 @@
 package main;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public abstract class Search 
 {
-
+	public String searchType = "Search"; 
 	public List<BoardState> closed = new LinkedList<BoardState>(); 
 	protected static List<BoardState> fringe = new LinkedList<BoardState>();
 
@@ -19,21 +18,6 @@ public abstract class Search
 	{
 		return goalPosition; 
 	}
-
-	//currentBoard.setBranchingFactor(children.size());
-	//currentBoard.setChildren(children);
-	//		System.out.println("children");
-	//		for(int s=0;s<children.size();s++){
-	//		    System.out.println(children.get(s));
-	//		} 
-
-	//		fringe.addAll(currentBoard.children);	
-	//		fringe.remove(currentBoard);
-	//		if (pegsRemaining < 6)
-	//		{
-	//			//System.out.println("Pegs Remaining: " + pegsRemaining);
-	//		}
-	//return currentBoard.children;
 
 	/*** 
 	 * This method increments the loop detection counter, and prints 
@@ -53,14 +37,10 @@ public abstract class Search
 	}
 
 	public abstract boolean find(BoardState initialState, BoardState goalState);
-	@SuppressWarnings("null")
 	public void printSolution(BoardState board, boolean found)
 	{
-		System.out.println(" ");
-		System.out.println("SEARCH STATS:");
 		System.out.println("--------------------------------");
-		System.out.println("Search used:");
-		System.out.println("Solution found: " + found);
+		System.out.println("Solution Found: " + found);
 		System.out.println("Nodes Expanded: " + nodesExamined);
 		System.out.println("Loops Detected: " + getLoopsDetected());
 
@@ -75,11 +55,11 @@ public abstract class Search
 			}
 
 			System.out.println(" ");
+			System.out.println("Moves Required: " + (solution.size()-1));
 			System.out.println("Solution Path:");
-			for(int i = solution.size()-2; i >= 0; i--)
+			for(int i = solution.size() - 1; i >= 0; i--)
 			{
-				System.out.println("(" + ((MCBoardState)board).getMissionaries() + ", " + ((MCBoardState) board).getCannibals()  + ", " + ((MCBoardState) board).getBoat() + ")" ); 
-				//Driver.printArray(solution.get(i));
+				solution.get(i).printState(solution.get(i));
 			}
 		}
 

@@ -26,14 +26,11 @@ public class DepthFirstSearch extends Search
 				System.out.println(nodesExamined + " nodes examined. ");
 				System.out.println("Still searching DFS... ");
 			}
-			//System.out.println(currentState);
 			currentState = stack.pop();
-			//System.out.println("Canns: " + ((MCBoardState) currentState).getCannibals());
-
+			currentState.incrementPathCost(currentState); 
+			//System.out.println(currentState.getPathCost(currentState));
 			if (!currentState.checkGoalState(currentState, goalState))
 			{
-				//System.out.println("next tgought");
-
 				if (!closed.contains(currentState)) 
 				{
 					currentState.expand(currentState);
@@ -57,7 +54,9 @@ public class DepthFirstSearch extends Search
 			}		
 			nodesExamined++; 
 		}
-		printSolution(currentState, found); 
+		System.out.println(" ");
+		System.out.println("DEPTH FIRST SEARCH STATS:");
+		printSolution(currentState, found);
 		return found;
 	}
 }

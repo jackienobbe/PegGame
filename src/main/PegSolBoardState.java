@@ -24,20 +24,20 @@ public class PegSolBoardState extends BoardState
 	@Override
 	public List<BoardState> expand( BoardState currentBoard )
 	{
-		for( int i = 0; i < currentBoard.getBoardState().length; i++ )
+		for( int i = 0; i < ((PegSolBoardState) currentBoard).getBoardState().length; i++ )
 		{
-			for ( int j = 0; j < currentBoard.getBoardState()[i].length; j++ )
+			for ( int j = 0; j < ((PegSolBoardState) currentBoard).getBoardState()[i].length; j++ )
 			{
-				if(currentBoard.getBoardState()[i][j] == 0)
+				if(((PegSolBoardState) currentBoard).getBoardState()[i][j] == 0)
 				{
 					if(checkZeroMoveDown( currentBoard, i, j ))
 					{						
-						int[][] newPegs = new int[currentBoard.getBoardState().length][currentBoard.getBoardState().length];
-						for( int g = 0; g < currentBoard.getBoardState().length; g++)
+						int[][] newPegs = new int[((PegSolBoardState) currentBoard).getBoardState().length][((PegSolBoardState) currentBoard).getBoardState().length];
+						for( int g = 0; g < ((PegSolBoardState) currentBoard).getBoardState().length; g++)
 						{
-							for(int h = 0; h < currentBoard.getBoardState()[g].length; h++)
+							for(int h = 0; h < ((PegSolBoardState) currentBoard).getBoardState()[g].length; h++)
 							{
-								newPegs[g][h] = currentBoard.getBoardState()[g][h];
+								newPegs[g][h] = ((PegSolBoardState) currentBoard).getBoardState()[g][h];
 							}
 						}
 						BoardState child = new PegSolBoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
@@ -46,75 +46,73 @@ public class PegSolBoardState extends BoardState
 						currentBoard.children.add(child);
 						child.parent = currentBoard; 
 
-//						System.out.println("Move down"); 
-//						Driver.printArray(child);
+						//						System.out.println("Move down"); 
+						//						Driver.printArray(child);
 					}
-					
+
 					if(checkZeroMoveRight( currentBoard, i, j ))
 					{				
-						int[][] newPegs = new int[currentBoard.getBoardState().length][currentBoard.getBoardState().length];
-						for( int g = 0; g < currentBoard.getBoardState().length; g++)
-						{
-							for(int h = 0; h < currentBoard.getBoardState()[g].length; h++)
-							{
-								newPegs[g][h] = currentBoard.getBoardState()[g][h];
-							}
-						}
-						BoardState child = new PegSolBoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
+						BoardState child = makeChild(currentBoard);
 
 						child = movePegRight( child, i, j ); 
 						currentBoard.children.add(child);
 						child.parent = currentBoard; 
 
-//						System.out.println("Move Right"); 
-//						Driver.printArray(child);
+						//						System.out.println("Move Right"); 
+						//						Driver.printArray(child);
 					}
 
-					
 					if(checkZeroMoveLeft( currentBoard, i, j ))
 					{
-						int[][] newPegs = new int[currentBoard.getBoardState().length][currentBoard.getBoardState().length];
-						for( int g = 0; g < currentBoard.getBoardState().length; g++)
-						{
-							for(int h = 0; h < currentBoard.getBoardState()[g].length; h++)
-							{
-								newPegs[g][h] = currentBoard.getBoardState()[g][h];
-							}
-						}
-						BoardState child = new PegSolBoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
+						BoardState child = makeChild(currentBoard);
 
 						child = movePegLeft( child, i, j ); 
 						currentBoard.children.add(child);
 						child.parent = currentBoard; 
 
-//						System.out.println("Move left"); 
-//						Driver.printArray(child);
+						//						System.out.println("Move left"); 
+						//						Driver.printArray(child);
 					}
 					if(checkZeroMoveUp( currentBoard, i, j ))
 					{						
 						//System.out.println("here"); 
 
-						int[][] newPegs = new int[currentBoard.getBoardState().length][currentBoard.getBoardState().length];
-						for( int g = 0; g < currentBoard.getBoardState().length; g++)
-						{
-							for(int h = 0; h < currentBoard.getBoardState()[g].length; h++)
-							{
-								newPegs[g][h] = currentBoard.getBoardState()[g][h];
-							}
-						}
-						BoardState child = new PegSolBoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
+						//						int[][] newPegs = new int[currentBoard.getBoardState().length][currentBoard.getBoardState().length];
+						//						for( int g = 0; g < currentBoard.getBoardState().length; g++)
+						//						{
+						//							for(int h = 0; h < currentBoard.getBoardState()[g].length; h++)
+						//							{
+						//								newPegs[g][h] = currentBoard.getBoardState()[g][h];
+						//							}
+						//						}
+						//						BoardState child = new PegSolBoardState(makeChild(currentBoard), 1);  //currentBoard.getPathCost() + 1);
+						BoardState child = makeChild(currentBoard);
 
 						child = movePegUp( child, i, j ); 
 						currentBoard.children.add(child);
 						child.parent = currentBoard; 
 
-//						System.out.println("Move UP"); 
-//						Driver.printArray(child);
+						//						System.out.println("Move UP"); 
+						//						Driver.printArray(child);
 					}
 				}
 			}
 		}
 		return children;
+	}
+
+	private BoardState makeChild(BoardState currentBoard) 
+	{
+		int[][] newPegs = new int[((PegSolBoardState) currentBoard).getBoardState().length][((PegSolBoardState) currentBoard).getBoardState().length];
+		for( int g = 0; g < ((PegSolBoardState) currentBoard).getBoardState().length; g++)
+		{
+			for(int h = 0; h < ((PegSolBoardState) currentBoard).getBoardState()[g].length; h++)
+			{
+				newPegs[g][h] = ((PegSolBoardState) currentBoard).getBoardState()[g][h];
+			}
+		}
+		BoardState child = new PegSolBoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
+		return child;
 	}
 
 	private static final int BOARD_LEFT_BOUNDARY = 1;
@@ -125,12 +123,12 @@ public class PegSolBoardState extends BoardState
 	{
 		//System.out.println("checkMoveRight: y" + i + ", x" + j );
 		// check if move will be out of bounds
-		if ( j < board.getBoardState().length - JUMP_SIZE)
+		if ( j < ((PegSolBoardState) board).getBoardState().length - JUMP_SIZE)
 		{
 			// check that pegs exist in the correct positions
-			if( board.getBoardState()[i][j] == 0 && 
-					board.getBoardState()[i][j + 1] == 1 && 
-					board.getBoardState()[i][j + 2] == 1 )
+			if( ((PegSolBoardState) board).getBoardState()[i][j] == 0 && 
+					((PegSolBoardState) board).getBoardState()[i][j + 1] == 1 && 
+					((PegSolBoardState) board).getBoardState()[i][j + 2] == 1 )
 			{
 				return true; 
 			}
@@ -144,9 +142,9 @@ public class PegSolBoardState extends BoardState
 		if ( j > BOARD_LEFT_BOUNDARY )
 		{
 			// check that pegs exist in the correct positions
-			if( board.getBoardState()[i][j] == 0 && 
-					board.getBoardState()[i][j - 1] == 1 && 
-					board.getBoardState()[i][j - 2] == 1 )
+			if( ((PegSolBoardState) board).getBoardState()[i][j] == 0 && 
+					((PegSolBoardState) board).getBoardState()[i][j - 1] == 1 && 
+					((PegSolBoardState) board).getBoardState()[i][j - 2] == 1 )
 			{
 				return true; 
 			}
@@ -159,9 +157,9 @@ public class PegSolBoardState extends BoardState
 		if ( i > BOARD_UP_BOUNDARY)
 		{
 			// check that pegs exist in the correct positions
-			if( board.getBoardState()[i][j] == 0 && 
-					board.getBoardState()[i - 1][j] == 1 && 
-					board.getBoardState()[i - 2][j] == 1 )
+			if( ((PegSolBoardState) board).getBoardState()[i][j] == 0 && 
+					((PegSolBoardState) board).getBoardState()[i - 1][j] == 1 && 
+					((PegSolBoardState) board).getBoardState()[i - 2][j] == 1 )
 			{
 				return true; 
 			}
@@ -172,13 +170,14 @@ public class PegSolBoardState extends BoardState
 	{
 		//System.out.println("checkMoveDown: y" + i + ", x" + j );
 		// check if move will be out of bounds
-		if ( i < board.getBoardState().length - JUMP_SIZE )
+		if ( i < ((PegSolBoardState) board).getBoardState().length - JUMP_SIZE )
 		{
 			// check that pegs exist in the correct positions
-			if( board.getBoardState()[i][j] == 0 && 
-					board.getBoardState()[i + 1][j] == 1 && 
-					board.getBoardState()[i + 2][j] == 1 )
+			if( ((PegSolBoardState) board).getBoardState()[i][j] == 0 && 
+					((PegSolBoardState) board).getBoardState()[i + 1][j] == 1 && 
+					((PegSolBoardState) board).getBoardState()[i + 2][j] == 1 )
 			{
+
 				return true; 
 			}
 		}
@@ -187,33 +186,33 @@ public class PegSolBoardState extends BoardState
 
 	public static BoardState movePegRight( BoardState board, int i, int j ) 
 	{
-		board.getBoardState()[i][j] = 1; 
-		board.getBoardState()[i][j + 1] = 0; 
-		board.getBoardState()[i][j + 2] = 0; 		
+		((PegSolBoardState) board).getBoardState()[i][j] = 1; 
+		((PegSolBoardState) board).getBoardState()[i][j + 1] = 0; 
+		((PegSolBoardState) board).getBoardState()[i][j + 2] = 0; 		
 
 		return board;
 	}
 	public static BoardState movePegLeft(BoardState board, int i, int j)
 	{
-		board.getBoardState()[i][j] = 1; 
-		board.getBoardState()[i][j - 1] = 0; 
-		board.getBoardState()[i][j - 2] = 0; 		
+		((PegSolBoardState) board).getBoardState()[i][j] = 1; 
+		((PegSolBoardState) board).getBoardState()[i][j - 1] = 0; 
+		((PegSolBoardState) board).getBoardState()[i][j - 2] = 0; 		
 
 		return board; 
 	}
 	public static BoardState movePegUp( BoardState board, int i, int j ) 
 	{
-		board.getBoardState()[i][j] = 1; 
-		board.getBoardState()[i - 1][j] = 0; 
-		board.getBoardState()[i - 2][j] = 0; 		
+		((PegSolBoardState) board).getBoardState()[i][j] = 1; 
+		((PegSolBoardState) board).getBoardState()[i - 1][j] = 0; 
+		((PegSolBoardState) board).getBoardState()[i - 2][j] = 0; 		
 
 		return board; 
 	}
 	public static BoardState movePegDown( BoardState board, int i, int j ) 
 	{
-		board.getBoardState()[i][j] = 1; 
-		board.getBoardState()[i + 1][j] = 0; 
-		board.getBoardState()[i + 2][j] = 0; 		
+		((PegSolBoardState) board).getBoardState()[i][j] = 1; 
+		((PegSolBoardState) board).getBoardState()[i + 1][j] = 0; 
+		((PegSolBoardState) board).getBoardState()[i + 2][j] = 0; 		
 
 		return board; 
 	}
@@ -221,11 +220,11 @@ public class PegSolBoardState extends BoardState
 	public int getIndex(BoardState board)
 	{
 		int pegsRemaining = 0; 
-		for (int i = 0; i < board.getBoardState().length; i++ )
+		for (int i = 0; i < ((PegSolBoardState) board).getBoardState().length; i++ )
 		{
-			for(int j = 0; j < board.getBoardState()[i].length; j++)
+			for(int j = 0; j < ((PegSolBoardState) board).getBoardState()[i].length; j++)
 			{
-				if(board.getBoardState()[i][j] == 1)
+				if(((PegSolBoardState) board).getBoardState()[i][j] == 1)
 				{
 					pegsRemaining++; 
 				}
@@ -238,14 +237,30 @@ public class PegSolBoardState extends BoardState
 		return pegPositions;
 	}
 
+	public void printState( BoardState board )
+	{
+		if (board instanceof PegSolBoardState)
+		{
+			System.out.println("------------------------"); 
+			for (int k = 0; k < ((PegSolBoardState) board).getBoardState().length; k++)
+			{
+				for (int g = 0; g < ((PegSolBoardState) board).getBoardState()[k].length; g++)
+				{
+					System.out.print(((PegSolBoardState) board).getBoardState()[k][g] + " ");
+				}
+				System.out.println(" ");
+			}
+		}
+	}
+
 	public boolean checkGoalState( BoardState board, BoardState goalState )
 	{
-		
-		for( int i = 0; i < board.getBoardState().length; i++ )
+
+		for( int i = 0; i < ((PegSolBoardState) board).getBoardState().length; i++ )
 		{
-			for( int j = 0; j < board.getBoardState()[i].length; j++ )
+			for( int j = 0; j < ((PegSolBoardState) board).getBoardState()[i].length; j++ )
 			{
-				if( board.getBoardState()[i][j] != goalState.getBoardState()[i][j])
+				if( ((PegSolBoardState) board).getBoardState()[i][j] != ((PegSolBoardState) goalState).getBoardState()[i][j])
 				{
 					//System.out.println("NOT GOAL");
 					return false; 
@@ -259,11 +274,11 @@ public class PegSolBoardState extends BoardState
 		if(o instanceof PegSolBoardState)
 		{
 			BoardState board = (PegSolBoardState)o;
-			for(int i = 0; i < board.getBoardState().length; i++)
+			for(int i = 0; i < ((PegSolBoardState) board).getBoardState().length; i++)
 			{
-				for(int j = 0; j < board.getBoardState()[i].length; j++)
+				for(int j = 0; j < ((PegSolBoardState) board).getBoardState()[i].length; j++)
 				{
-					if(this.pegPositions[i][j] != board.getBoardState()[i][j])
+					if(this.pegPositions[i][j] != ((PegSolBoardState) board).getBoardState()[i][j])
 					{
 						return false;
 					}
@@ -272,5 +287,65 @@ public class PegSolBoardState extends BoardState
 			return true;
 		}  
 		else return false; 
+	}
+	
+	public static int manhattanCost(BoardState board)
+	{
+		int value = 0;
+		int manDistance = 0;
+
+		for (int i = 0; i < ((PegSolBoardState) board).getBoardState().length; i++) 
+		{
+			for (int j = 0; j < ((PegSolBoardState) board).getBoardState()[i].length; j++) 
+			{
+				if( ((PegSolBoardState) board).getBoardState()[i][j] == 1 )
+				{
+					manDistance = Math.abs(i - Search.getGoalPosition()[0]) + Math.abs(j - Search.getGoalPosition()[1]);
+					value += manDistance;
+					//System.out.println("Hi. I have value. I am worth: " + value);
+				}
+			}
+		}
+		return value;
+	}
+	public static int weightedCost(BoardState board) 
+	{
+		int[][] costMatrix =  new int[][]{ 
+			{ 0, 0, 4, 0, 4, 0, 0 },
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 4, 0, 3, 0, 3, 0, 4 },
+			{ 0, 0, 0, 1, 0, 0, 0 }, 
+			{ 4, 0, 3, 0, 3, 0, 4 },
+			{ 0, 0, 0, 0, 0, 0, 0 }, 
+			{ 0, 0, 4, 0, 4, 0, 0 }}; 
+		return evaluateCost(board, costMatrix);
+	}
+
+	private static int evaluateCost(BoardState board, int[][] costMatrix) 
+	{
+		int boardCost = 0;
+		for (int i = 0; i < ((PegSolBoardState) board).getBoardState().length; i++) 
+		{
+			for (int j = 0; j < ((PegSolBoardState) board).getBoardState()[i].length; j++) 
+			{
+				if (((PegSolBoardState) board).getBoardState()[i][j] == 1) 
+				{
+					boardCost += costMatrix[i][j];
+				}
+			}
+		}
+		return boardCost;
+	}
+
+	@Override
+	public int getHeuristicCost(BoardState board) 
+	{
+		return weightedCost(board);
+	}
+
+	@Override
+	public int getHeuristicValue(BoardState board) 
+	{
+		return manhattanCost(board);
 	}
 }
