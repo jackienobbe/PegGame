@@ -7,12 +7,13 @@ public class GreedyBestFirstSearch extends Search
 {	
 	PQsort pqs = new PQsort();
 	PriorityQueue<BoardState> fringe = new PriorityQueue<BoardState>(10, pqs);
-	
+
 	@Override
 	public boolean find(BoardState initialState, BoardState goalState) 
 	{
 		boolean found = false; 
 		BoardState best = null; 
+		continueSearch = true; 
 
 		fringe.add(initialState);
 		System.out.println("______________________________");
@@ -20,41 +21,63 @@ public class GreedyBestFirstSearch extends Search
 		System.out.println("Searching Greedy Best First... ");
 		System.out.println("------------------------------");
 
-		while (!found && !fringe.isEmpty() ) 
+		while(continueSearch == true)
 		{
-			//print every time a 10000th node is examined
-			if (nodesExamined % 10000 == 0)
+			while (!found && fringe.size() != 0 && System.currentTimeMillis() < end) 
 			{
-				System.out.println(nodesExamined + " nodes examined. ");
-				System.out.println("Still searching GBF... ");
-			}
-			//take top of priority q
-			best = fringe.poll();
-
-			if (!best.checkGoalState(best, goalState))
-			{
-				if(!closed.contains(best))
+				//print every time a 10000th node is examined
+				if (nodesExamined % 10000 == 0)
 				{
-					best.expand(best);
-					closed.add(best);
-					for( int i = 0; i < best.children.size(); i++ )
+					System.out.println(nodesExamined + " nodes examined. ");
+					System.out.println("Still searching GBF... ");
+				}
+				//take top of priority q
+				best = fringe.poll();
+
+				if (!best.checkGoalState(best, goalState))
+				{
+					if(!closed.contains(best))
 					{
-						fringe.offer(best.children.get(i));
-					}			
+						best.expand(best);
+						closed.add(best);
+						for( int i = 0; i < best.children.size(); i++ )
+						{
+							fringe.offer(best.children.get(i));
+						}			
+					}
+					else
+					{
+						//Found on closed list, so increment number of loops detected
+						loopDetectionCount();
+					}	
+				}
+				else // SOLUTION FOUND!
+				{
+					System.out.println(" ");
+					System.out.println("SOLUTION FOUND!");
+					found = true; 
+					continueSearch = false; 
+				}		
+				nodesExamined++; 
+			}
+			if(!found)
+			{
+				System.out.println(" ");
+				System.out.println("Solution could not be found in " + (end - start)/6000 + " minutes.");
+				System.out.println("Would you like to continue searching? Y for Yes. ");
+				char c = scanner.next().charAt(0);
+				if (c == 'Y')
+				{
+					start = System.currentTimeMillis();
+					end = start + 120 * 1000; // 120 seconds + 1000 ms/sec 
+					System.out.println("Continuing search with DFS...");
 				}
 				else
 				{
-					//Found on closed list, so increment number of loops detected
-					loopDetectionCount();
-				}	
+					continueSearch = false; 
+					found = false; 
+				}
 			}
-			else // SOLUTION FOUND!
-			{
-				System.out.println(" ");
-				System.out.println("SOLUTION FOUND!");
-				found = true; 
-			}		
-			nodesExamined++; 
 		}
 		System.out.println(" ");
 		System.out.println("GREEDY BEST FIRST SEARCH STATS:");

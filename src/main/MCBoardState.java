@@ -5,16 +5,15 @@ import java.util.List;
 
 public class MCBoardState extends BoardState
 {
-	private static final int MISSIONARIES = 0;
+	private static final int MISSIONARIES = 0; //position in inital
 	private static final int CANNIBALS = 1;
 	private static final int BOAT = 2;
+	private static final int STEP_COST = 1;
 
 	private int cannibals;
 	private int missionaries;
 	private int boat;
 	private int boatCapacity = 2; 
-
-	//private int branchingFactor; 
 
 	int[] boardState = new int[3];
 	int[] initialBoardState = new int[] {3,3,1}; 
@@ -24,12 +23,11 @@ public class MCBoardState extends BoardState
 	public MCBoardState(int missionaries, int cannibals, int boat, int pathCost) 
 	{
 		initializePossibleMoves(); 
-
+		
 		this.missionaries = missionaries;
 		this.cannibals = cannibals;
 		this.boat = boat;
-		this.pathCost = pathCost + 1; 
-		//System.out.println("New Board: (" + this.missionaries + ", " + this.cannibals  + ", " + this.boat + ")" ); 
+		this.pathCost = pathCost; 
 	}
 
 	/***************************
@@ -79,6 +77,7 @@ public class MCBoardState extends BoardState
 				}
 				if(isValid((MCBoardState) child))
 				{
+					child.incrementPathCost(child);
 					currentBoard.children.add(child);
 					child.parent = currentBoard;
 				}
@@ -187,11 +186,6 @@ public class MCBoardState extends BoardState
 		return true;
 	}  
 	
-	int[] getBoardState()
-	{
-		return boardState;
-	}
-	
 	public int getMissionaries() 
 	{
 		return this.missionaries;
@@ -219,6 +213,12 @@ public class MCBoardState extends BoardState
 		return (((MCBoardState) board).getMissionaries() + ((MCBoardState) board).getCannibals()) / ((MCBoardState) board).getBoatCapacity(); 
 	}
 
-
-	
+	public int incrementPathCost(BoardState board)
+	{
+		return board.pathCost + STEP_COST; 
+	}
+	public int getPathCost(BoardState board) 
+	{
+		return board.pathCost;
+	}
 }

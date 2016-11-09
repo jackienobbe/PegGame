@@ -15,50 +15,73 @@ public class DepthFirstSearch extends Search
 	{
 		boolean found = false;
 		BoardState currentState = null;
-		
+		continueSearch = true; 
+
 		fringe.push(initialState);
 		System.out.println("______________________________");
 		System.out.println("------------------------------");
 		System.out.println("Searching Depth First... ");
 		System.out.println("------------------------------");
 
-		while (!found && !fringe.empty()) 
+		while(continueSearch == true)
 		{
-			//print every time a 10000th node is examined
-			if (nodesExamined % 10000 == 0)
+			while (!found && fringe.size() != 0 && System.currentTimeMillis() < end) 
 			{
-				System.out.println(nodesExamined + " nodes examined. ");
-				System.out.println("Still searching DFS... ");
-			}
-			currentState = fringe.pop();
-			currentState.incrementPathCost(currentState); 
-
-			if (!currentState.checkGoalState(currentState, goalState))
-			{
-				if (!closed.contains(currentState)) 
+				//print every time a 10000th node is examined
+				if (nodesExamined % 10000 == 0)
 				{
-					currentState.expand(currentState);
-					closed.add(currentState);
-					
-					//add children to queue
-					for( int i = 0; i < currentState.children.size(); i++ )
+					System.out.println(nodesExamined + " nodes examined. ");
+					System.out.println("Still searching DFS... ");
+				}
+				currentState = fringe.pop();
+				//currentState.incrementPathCost(currentState); 
+
+				if (!currentState.checkGoalState(currentState, goalState))
+				{
+					if (!closed.contains(currentState)) 
 					{
-						fringe.add(currentState.children.get(i));
+						currentState.expand(currentState);
+						closed.add(currentState);
+
+						//add children to queue
+						for( int i = 0; i < currentState.children.size(); i++ )
+						{
+							fringe.add(currentState.children.get(i));
+						}
 					}
+					else
+					{
+						//Found on closed list, so increment number of loops detected
+						loopDetectionCount();
+					}	
+				}
+				else // SOLUTION FOUND!
+				{
+					System.out.println(" ");
+					System.out.println("SOLUTION FOUND!");
+					found = true; 
+					continueSearch = false; 
+				}		
+				nodesExamined++; 
+			}
+			if(!found)
+			{
+				System.out.println(" ");
+				System.out.println("Solution could not be found in two minutes.");
+				System.out.println("Would you like to continue searching? Y for Yes. ");
+				char c = scanner.next().charAt(0);
+				if (c == 'Y')
+				{
+					start = System.currentTimeMillis();
+					end = start + 120 * 1000; // 120 seconds + 1000 ms/sec 
+					System.out.println("Continuing search with DFS...");
 				}
 				else
 				{
-					//Found on closed list, so increment number of loops detected
-					loopDetectionCount();
-				}	
+					continueSearch = false; 
+					found = false; 
+				}
 			}
-			else // SOLUTION FOUND!
-			{
-				System.out.println(" ");
-				System.out.println("SOLUTION FOUND!");
-				found = true; 
-			}		
-			nodesExamined++; 
 		}
 		System.out.println(" ");
 		System.out.println("DEPTH FIRST SEARCH STATS:");

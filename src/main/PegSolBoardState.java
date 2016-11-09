@@ -115,6 +115,7 @@ public class PegSolBoardState extends BoardState
 		return child;
 	}
 
+	private static final int STEP_COST = 1; 
 	private static final int BOARD_LEFT_BOUNDARY = 1;
 	private static final int BOARD_UP_BOUNDARY = 1;
 	private static final int JUMP_SIZE = 2;
@@ -359,5 +360,14 @@ public class PegSolBoardState extends BoardState
 	public int getHeuristicValue(BoardState board) 
 	{
 		return manhattanCost(board);
+	}
+
+	public int incrementPathCost(BoardState board)
+	{
+		return board.pathCost + STEP_COST; 
+	}
+	public int getPathCost(BoardState board) 
+	{
+		return board.pathCost;
 	}
 }

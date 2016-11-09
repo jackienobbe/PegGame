@@ -2,10 +2,15 @@ package main;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 public abstract class Search 
 {
 	public List<BoardState> closed = new LinkedList<BoardState>(); 
+	Scanner scanner = new Scanner(System.in);
+	public long start = System.currentTimeMillis();
+	public long end = start + 120*1000; // 120 seconds * 1000 ms/sec
+	public boolean continueSearch = true;
 
 	static int pegsRemaining; 
 	int loopDetectionCount; 
