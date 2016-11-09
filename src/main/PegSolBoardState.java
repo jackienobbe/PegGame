@@ -343,7 +343,7 @@ public class PegSolBoardState extends BoardState
 			{
 				if (((PegSolBoardState) board).getBoardState()[i][j] == 1) 
 				{
-					boardCost += costMatrix[i][j];
+					boardCost += (costMatrix[i][j] / 4);
 				}
 			}
 		}

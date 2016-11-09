@@ -73,7 +73,6 @@ public class Main
 
 		BreadthFirstSearch bfs = new BreadthFirstSearch();  
 		bfs.find(initialBoardState, goalBoardState); 
-
 	}
 }
 
