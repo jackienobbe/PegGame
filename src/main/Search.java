@@ -5,9 +5,7 @@ import java.util.List;
 
 public abstract class Search 
 {
-	public String searchType = "Search"; 
 	public List<BoardState> closed = new LinkedList<BoardState>(); 
-	protected static List<BoardState> fringe = new LinkedList<BoardState>();
 
 	static int pegsRemaining; 
 	int loopDetectionCount; 
@@ -54,15 +52,16 @@ public abstract class Search
 				board = board.parent;
 			}
 
-			System.out.println(" ");
 			System.out.println("Moves Required: " + (solution.size()-1));
-			System.out.println("Solution Path:");
+			System.out.println("Solution:");
+			solution.get(0).printGameInfo(board); 
+
 			for(int i = solution.size() - 1; i >= 0; i--)
 			{
 				solution.get(i).printState(solution.get(i));
 			}
 		}
-
+		System.out.println(" ");
 	}
 }
 

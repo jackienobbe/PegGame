@@ -151,21 +151,6 @@ public class PegSolBoardState extends BoardState
 		}
 		return false; 
 	}
-	static boolean checkZeroMoveUp( BoardState board, int i, int j ) 
-	{
-		// check if move will be out of bounds
-		if ( i > BOARD_UP_BOUNDARY)
-		{
-			// check that pegs exist in the correct positions
-			if( ((PegSolBoardState) board).getBoardState()[i][j] == 0 && 
-					((PegSolBoardState) board).getBoardState()[i - 1][j] == 1 && 
-					((PegSolBoardState) board).getBoardState()[i - 2][j] == 1 )
-			{
-				return true; 
-			}
-		}
-		return false; 
-	}
 	static boolean checkZeroMoveDown( BoardState board, int i, int j ) 
 	{
 		//System.out.println("checkMoveDown: y" + i + ", x" + j );
@@ -183,6 +168,22 @@ public class PegSolBoardState extends BoardState
 		}
 		return false; 
 	}
+	static boolean checkZeroMoveUp( BoardState board, int i, int j ) 
+	{
+		// check if move will be out of bounds
+		if ( i > BOARD_UP_BOUNDARY)
+		{
+			// check that pegs exist in the correct positions
+			if( ((PegSolBoardState) board).getBoardState()[i][j] == 0 && 
+					((PegSolBoardState) board).getBoardState()[i - 1][j] == 1 && 
+					((PegSolBoardState) board).getBoardState()[i - 2][j] == 1 )
+			{
+				return true; 
+			}
+		}
+		return false; 
+	}
+
 
 	public static BoardState movePegRight( BoardState board, int i, int j ) 
 	{
@@ -237,7 +238,19 @@ public class PegSolBoardState extends BoardState
 		return pegPositions;
 	}
 
-	public void printState( BoardState board )
+	public void printGameInfo(BoardState board)
+	{
+		//if (board instanceof PegSolBoardState)
+		{
+			System.out.println(" "); 
+			System.out.println("The following grids represent states ");
+			System.out.println("of the peg solitaire game. A 0 represents");
+			System.out.println("a hole, a 1 represents a peg, and a 2 ");
+			System.out.println("represents a position out of bounds.") ; 
+			System.out.println(" "); 
+		}
+	}
+	public void printState(BoardState board)
 	{
 		if (board instanceof PegSolBoardState)
 		{
@@ -342,7 +355,6 @@ public class PegSolBoardState extends BoardState
 	{
 		return weightedCost(board);
 	}
-
 	@Override
 	public int getHeuristicValue(BoardState board) 
 	{

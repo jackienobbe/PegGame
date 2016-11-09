@@ -11,18 +11,6 @@ public abstract class BoardState
 	BoardState parent = null;
 	public int pathCost; 
 
-//	public void setBranchingFactor(BoardState board)
-//	{
-//		board.branchingFactor = board.children.size(); 
-//	};
-
-	//public abstract void getBoardState(); 
-
-	public void setBoardState( int[][] newBoard, BoardState board)
-	{
-		//board.pegPositions = newBoard; 
-	}
-
 	void setChildren( List<BoardState> children )
 	{
 		this.children = children; 
@@ -38,13 +26,15 @@ public abstract class BoardState
 	}
 	public int getPathCost(BoardState board) 
 	{
-		System.out.println(board.pathCost);
+		//System.out.println(board.pathCost);
 		return board.pathCost;
 	}
 	public abstract int getHeuristicCost(BoardState board); 
 	public abstract List<BoardState> expand(BoardState board);
 	public abstract boolean checkGoalState(BoardState currentState, BoardState goalState);
+	public abstract void printGameInfo(BoardState board);
 	public abstract void printState(BoardState board);
 	public abstract int getHeuristicValue(BoardState board);
+
 	
 }

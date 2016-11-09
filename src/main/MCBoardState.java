@@ -49,7 +49,6 @@ public class MCBoardState extends BoardState
 		possibleMoves.add(new int[]{0,1,1}); 
 		possibleMoves.add(new int[]{0,2,1}); 
 		possibleMoves.add(new int[]{1,1,1}); 
-
 	}
 
 	/***************************
@@ -152,13 +151,25 @@ public class MCBoardState extends BoardState
 		}
 		return false; 
 	}
-
-	public void printState( BoardState board)
+	public void printGameInfo(BoardState board)
+	{
+			System.out.println(" ");
+			System.out.println("The following states represent the number "); 
+			System.out.println("of missionaries, cannibals, and boats on "); 
+			System.out.println("each shore, respectively.");
+			System.out.println(" ");
+			System.out.println("  Start  " + "   ~~~   " + "   End   ");
+	}
+	public void printState(BoardState board)
 	{
 		if (board instanceof MCBoardState)
 		{
-			//System.out.println("------------------------"); 
-			System.out.println("(" + ((MCBoardState) board).getMissionaries() + ", " + getCannibals() + ", " + getBoat() + ")");
+			System.out.println("(" + getMissionaries() + ", " + getCannibals() + ", " + getBoat() + 
+					")" + "   ~~~   " + "(" + 
+					(((MCBoardState) board).initialBoardState[MISSIONARIES] - getMissionaries()) + ", " + 
+					(((MCBoardState) board).initialBoardState[CANNIBALS] - getCannibals()) + ", " + 
+					(((MCBoardState) board).initialBoardState[BOAT] - getBoat()) + ")");
+
 		}
 	}
 	public boolean equals(Object o)

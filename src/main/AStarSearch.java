@@ -11,11 +11,14 @@ public class AStarSearch extends Search
 	@Override
 	public boolean find(BoardState initialState, BoardState goalState) 
 	{
-		System.out.println("Searching... ");
 		boolean found = false; 
 		BoardState best = null; 
 
 		fringe.add(initialState);
+		System.out.println("______________________________");
+		System.out.println("------------------------------");
+		System.out.println("Searching A*... ");
+		System.out.println("------------------------------");
 		while (!found && !fringe.isEmpty() ) 
 		{
 			//print every time a 10000th node is examined
@@ -46,6 +49,8 @@ public class AStarSearch extends Search
 			}
 			else // SOLUTION FOUND!
 			{
+				System.out.println(" ");
+				System.out.println("SOLUTION FOUND!");
 				found = true; 
 			}		
 			nodesExamined++; 

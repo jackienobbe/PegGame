@@ -5,9 +5,7 @@ import java.util.Queue;
 
 public class BreadthFirstSearch extends Search 
 {
-	private Queue<BoardState> queue = new LinkedList<BoardState>();
-
-	BreadthFirstSearch(){}
+	private Queue<BoardState> fringe = new LinkedList<BoardState>();
 
 	@Override
 	public String toString() 
@@ -21,11 +19,13 @@ public class BreadthFirstSearch extends Search
 		boolean found = false;
 		BoardState currentState = null; 
 		
-		queue.add(initialState);
-
-		System.out.println("Searching... ");
-
-		while (!found && queue.size() != 0) 
+		fringe.add(initialState);
+		System.out.println("______________________________");
+		System.out.println("------------------------------");
+		System.out.println("Searching Breadth First... ");
+		System.out.println("------------------------------");
+		
+		while (!found && fringe.size() != 0) 
 		{
 			//print every time a 10000th node is examined
 			if (nodesExamined % 10000 == 0)
@@ -34,7 +34,7 @@ public class BreadthFirstSearch extends Search
 				System.out.println("Still searching BFS... ");
 			}
 			
-			currentState = queue.poll();
+			currentState = fringe.poll();
 			if (!currentState.checkGoalState(currentState, goalState))
 			{
 				if (!closed.contains(currentState)) 
@@ -45,7 +45,7 @@ public class BreadthFirstSearch extends Search
 					//add children to queue
 					for( int i = 0; i < currentState.children.size(); i++ )
 					{
-						queue.add(currentState.children.get(i));
+						fringe.add(currentState.children.get(i));
 					}
 				}
 				else
@@ -56,6 +56,8 @@ public class BreadthFirstSearch extends Search
 			}
 			else // SOLUTION FOUND!
 			{
+				System.out.println(" ");
+				System.out.println("SOLUTION FOUND!");
 				found = true; 
 			}
 			nodesExamined++; 
