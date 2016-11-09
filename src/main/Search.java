@@ -5,161 +5,64 @@ import java.util.List;
 
 public abstract class Search 
 {
-	protected List<BoardState> closed = new LinkedList<BoardState>();
+	public String searchType = "Search"; 
+	public List<BoardState> closed = new LinkedList<BoardState>(); 
 	protected static List<BoardState> fringe = new LinkedList<BoardState>();
-	//protected static List<BoardState> children = new LinkedList<BoardState>();
-	static int pegsRemaining;// = 0; 
+
+	static int pegsRemaining; 
+	int loopDetectionCount; 
 	static int nodesExamined = 0;
 	public static int[] goalPosition = new int[2]; 
 
-	void setGoalPosition(BoardState goalState)
-	{
-		for (int i = 0; i < goalState.getPegPositions().length; i++ )
-		{
-			for(int j = 0; j < goalState.getPegPositions()[i].length; j++)
-			{
-				if(goalState.getPegPositions()[i][j] == 1)
-				{
-					goalPosition[0] = i; 
-					goalPosition[1] = j; 
-					System.out.println(i + " " + j);
-				}
-			}
-		}
-		System.out.println("HERE " + goalState.getPegPositions().length); 
-	}	
 	static int[] getGoalPosition()
 	{
 		return goalPosition; 
 	}
-	
-	static List<BoardState> expand( BoardState currentBoard )
+
+	/*** 
+	 * This method increments the loop detection counter, and prints 
+	 * the total number of detected loops.
+	 */
+	public void loopDetectionCount() 
 	{
-		pegsRemaining = 0; 
-		for( int i = 0; i < currentBoard.getPegPositions().length; i++ )
+		loopDetectionCount++; 
+		if (loopDetectionCount % 10000 == 0)
 		{
-			for ( int j = 0; j < currentBoard.getPegPositions()[i].length; j++ )
-			{
-				if(currentBoard.getPegPositions()[i][j] == 0)
-				{
-					if(Driver.checkZeroMoveRight( currentBoard, i, j ))
-					{				
-						int[][] newPegs = new int[currentBoard.getPegPositions().length][currentBoard.getPegPositions().length];
-						for( int g = 0; g < currentBoard.getPegPositions().length; g++)
-						{
-							for(int h = 0; h < currentBoard.getPegPositions()[g].length; h++)
-							{
-								newPegs[g][h] = currentBoard.getPegPositions()[g][h];
-							}
-						}
-						BoardState child = new BoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
-
-						child = Driver.movePegRight( child, i, j ); 
-						currentBoard.children.add(child);
-
-						//	System.out.println("Move Right"); 
-						//	Driver.printArray(child);
-
-					}
-
-					if(Driver.checkZeroMoveUp( currentBoard, i, j ))
-					{						
-						//System.out.println("here"); 
-
-						int[][] newPegs = new int[currentBoard.getPegPositions().length][currentBoard.getPegPositions().length];
-						for( int g = 0; g < currentBoard.getPegPositions().length; g++)
-						{
-							for(int h = 0; h < currentBoard.getPegPositions()[g].length; h++)
-							{
-								newPegs[g][h] = currentBoard.getPegPositions()[g][h];
-							}
-						}
-						BoardState child = new BoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
-
-						child = Driver.movePegUp( child, i, j ); 
-						currentBoard.children.add(child);
-
-						//						System.out.println("Move UP"); 
-						//						Driver.printArray(child);
-					}
-					if(Driver.checkZeroMoveLeft( currentBoard, i, j ))
-					{
-						int[][] newPegs = new int[currentBoard.getPegPositions().length][currentBoard.getPegPositions().length];
-						for( int g = 0; g < currentBoard.getPegPositions().length; g++)
-						{
-							for(int h = 0; h < currentBoard.getPegPositions()[g].length; h++)
-							{
-								newPegs[g][h] = currentBoard.getPegPositions()[g][h];
-							}
-						}
-						BoardState child = new BoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
-
-						child = Driver.movePegLeft( child, i, j ); 
-						currentBoard.children.add(child);
-
-						//						System.out.println("Move left"); 
-						//						Driver.printArray(child);
-					}
-					if(Driver.checkZeroMoveDown( currentBoard, i, j ))
-					{						
-						int[][] newPegs = new int[currentBoard.getPegPositions().length][currentBoard.getPegPositions().length];
-						for( int g = 0; g < currentBoard.getPegPositions().length; g++)
-						{
-							for(int h = 0; h < currentBoard.getPegPositions()[g].length; h++)
-							{
-								newPegs[g][h] = currentBoard.getPegPositions()[g][h];
-							}
-						}
-						BoardState child = new BoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
-
-						child = Driver.movePegDown( child, i, j ); 
-						currentBoard.children.add(child);
-
-						//						System.out.println("Move down"); 
-						//						Driver.printArray(child);
-					}
-				}
-				else if (currentBoard.getPegPositions()[i][j] == 1)
-				{
-					pegsRemaining++; 
-				}
-			}
+			System.out.println("Loops detected! " + loopDetectionCount + "+ loops detected.");
 		}
-		//currentBoard.setBranchingFactor(children.size());
-		//currentBoard.setChildren(children);
-		//		System.out.println("children");
-		//		for(int s=0;s<children.size();s++){
-		//		    System.out.println(children.get(s));
-		//		} 
-
-		fringe.addAll(currentBoard.children);	
-		fringe.remove(currentBoard);
-		if (pegsRemaining < 6)
-		{
-			System.out.println("Pegs Remaining: " + pegsRemaining);
-		}
-		return currentBoard.children;
 	}
-	public boolean checkGoalState( BoardState board, BoardState goalState, int pegsRemaining )
+	public int getLoopsDetected()
 	{
-		if ( pegsRemaining == 1)
-		{
-			System.out.println("Wiennnerrrrrr");
-			return true; 
-		}
-		for( int i = 0; i < board.getPegPositions().length; i++ )
-		{
-			for( int j = 0; j < board.getPegPositions()[i].length; j++ )
-			{
-				if( board.getPegPositions()[i][j] != goalState.getPegPositions()[i][j])
-				{
-					//System.out.println("NOT GOAL");
-					return false; 
-				}
-			}
-		}
-		System.out.println("GOOOOALLLLLLLL");
-		return true; 
+		return loopDetectionCount; 
 	}
+
 	public abstract boolean find(BoardState initialState, BoardState goalState);
+	public void printSolution(BoardState board, boolean found)
+	{
+		System.out.println("--------------------------------");
+		System.out.println("Solution Found: " + found);
+		System.out.println("Nodes Expanded: " + nodesExamined);
+		System.out.println("Loops Detected: " + getLoopsDetected());
+
+		if(found)
+		{
+			List<BoardState> solution = new LinkedList<BoardState>(); 
+			// follow parents to find solution
+			while(board != null)
+			{		
+				solution.add(board);
+				board = board.parent;
+			}
+
+			System.out.println(" ");
+			System.out.println("Moves Required: " + (solution.size()-1));
+			System.out.println("Solution Path:");
+			for(int i = solution.size() - 1; i >= 0; i--)
+			{
+				solution.get(i).printState(solution.get(i));
+			}
+		}
+
+	}
 }
+

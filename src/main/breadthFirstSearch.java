@@ -14,72 +14,55 @@ public class BreadthFirstSearch extends Search
 	{
 		return "Breadth First Search";
 	}
-	
+
 	@Override
 	public boolean find(BoardState initialState, BoardState goalState) 
 	{
-		System.out.println("Howdy."); 
 		boolean found = false;
-
+		BoardState currentState = null; 
+		
 		queue.add(initialState);
 
 		System.out.println("Searching... ");
 
 		while (!found && queue.size() != 0) 
 		{
-//			System.out.println("POP");
-//			System.out.println(queue.size());
-
-			BoardState currentState = queue.poll();
-//			System.out.println(queue.size());
-
-			if (!checkGoalState(currentState, goalState, pegsRemaining))
+			//print every time a 10000th node is examined
+			if (nodesExamined % 10000 == 0)
 			{
-				expand(currentState);
-
+				System.out.println(nodesExamined + " nodes examined. ");
+				System.out.println("Still searching BFS... ");
+			}
+			
+			currentState = queue.poll();
+			if (!currentState.checkGoalState(currentState, goalState))
+			{
 				if (!closed.contains(currentState)) 
 				{
+					currentState.expand(currentState);
 					closed.add(currentState);
-
+					
+					//add children to queue
 					for( int i = 0; i < currentState.children.size(); i++ )
 					{
 						queue.add(currentState.children.get(i));
 					}
 				}
-				System.out.println("Still searching... " + nodesExamined + " nodes expanded.");
-
+				else
+				{
+					//Found on closed list, so increment number of loops detected
+					loopDetectionCount();
+				}
 			}
-			else
+			else // SOLUTION FOUND!
 			{
-				System.out.println("FOUND");
-				Driver.printArray(currentState);
 				found = true; 
 			}
+			nodesExamined++; 
 		}
-		System.out.println(found);
+		System.out.println(" ");
+		System.out.println("BREADTH FIRST SEARCH STATS:");
+		printSolution(currentState, found);
 		return found;
 	}
-
-
-//	public List<Move> find(BoardState initialState, BoardState goalState) {
-//		queue.add(initialState);
-//		BoardState previous = initialState;
-//		while (!queue.isEmpty()) {
-//			BoardState current = queue.poll();
-//			expand(current);
-//			if (!current.equals(initialState)) {
-//				Move move = new Move(previous, current);
-//				moves.add(move);
-//			}
-//			if (current.getChildren().size() == 0) {
-//				return moves;
-//			} else if (!closed.contains(current)) {
-//				closed.add(current);
-//				for (BoardState child : current.getChildren()) {
-//					queue.add(child);
-//				}
-//			}
-//		}
-//		return moves;
-//	}
 }

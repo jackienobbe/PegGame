@@ -3,31 +3,24 @@ package main;
 import java.util.LinkedList;
 import java.util.List;
 
-public class BoardState implements Cloneable{
-	int[][] pegPositions;
-	int pathCost; 
-
+public abstract class BoardState
+{
 	List<BoardState> children = new LinkedList<BoardState>();
-	private int branchingFactor;
+	//private int branchingFactor;
+	public enum gameType {MC, PegSol}; 
+	BoardState parent = null;
+	public int pathCost; 
 
-	public BoardState( int[][] pegPositions, int level )
-	{
-		this.pegPositions = pegPositions; 
-		this.pathCost = pathCost; 
-	}
-	public int[][] getPegPositions() 
-	{
-		return pegPositions;
-	}
+//	public void setBranchingFactor(BoardState board)
+//	{
+//		board.branchingFactor = board.children.size(); 
+//	};
 
-	public void setBranchingFactor(int branchingFactor)
-	{
-		this.branchingFactor = branchingFactor;
-	}
+	//public abstract void getBoardState(); 
 
-	public void setBoardState( int[][] newBoard, BoardState board) 
+	public void setBoardState( int[][] newBoard, BoardState board)
 	{
-		board.pegPositions = newBoard; 
+		//board.pegPositions = newBoard; 
 	}
 
 	void setChildren( List<BoardState> children )
@@ -39,34 +32,19 @@ public class BoardState implements Cloneable{
 	{
 		return children;
 	}
-	public int incrementPathCost()
+	public int incrementPathCost(BoardState board)
 	{
-		return pathCost++; 
+		return board.pathCost++; 
 	}
-
-	public boolean equals(Object o)
+	public int getPathCost(BoardState board) 
 	{
-		if(o instanceof BoardState)
-		{
-			BoardState board = (BoardState)o;
-			for(int i = 0; i < board.getPegPositions().length; i++)
-			{
-				for(int j = 0; j < board.getPegPositions()[i].length; j++)
-				{
-					if(this.pegPositions[i][j] != board.getPegPositions()[i][j])
-					{
-						return false;
-					}
-				}
-			}
-			return true;
-		}  
-		else return false; 
+		System.out.println(board.pathCost);
+		return board.pathCost;
 	}
-	public int getHeuristicCost(BoardState board) 
-	{
-		int heuristicCost = Heuristic.manhattanCost(board); 
-		return heuristicCost;
-	}
-
+	public abstract int getHeuristicCost(BoardState board); 
+	public abstract List<BoardState> expand(BoardState board);
+	public abstract boolean checkGoalState(BoardState currentState, BoardState goalState);
+	public abstract void printState(BoardState board);
+	public abstract int getHeuristicValue(BoardState board);
+	
 }
