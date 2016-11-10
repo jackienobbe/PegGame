@@ -59,8 +59,8 @@ public class Main
 //		BoardState initialBoardState = new PegSolBoardState(initialStateFake2, 0); 	
 //		BoardState initialBoardState = new PegSolBoardState(initialStateFake3, 0); 	
 
-		BoardState initialBoardState = new PegSolBoardState(originalBoard, 0); 			
-		BoardState goalBoardState = new PegSolBoardState(goalState, 0);
+		BoardState initialBoardState = new PegSolBoardState(originalBoard); 			
+		BoardState goalBoardState = new PegSolBoardState(goalState);
 
 //				BoardState initialBoardState = new MCBoardState(3, 3, 1); 			
 //				BoardState goalBoardState = new MCBoardState(0, 0, 0);
