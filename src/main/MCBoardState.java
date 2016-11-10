@@ -20,10 +20,17 @@ public class MCBoardState extends BoardState
 
 	List<int[]> possibleMoves = new LinkedList<int[]>(); 
 
+	/**
+	 * Missionaries&Cannibals Board State constructor
+	 * @param missionaries number of missionaries on start shore
+	 * @param cannibals number of cannibals on start shore
+	 * @param boat location of boat (1 at start shore)
+	 * @param pathCost path cost to this board state
+	 */
 	public MCBoardState(int missionaries, int cannibals, int boat, int pathCost) 
 	{
 		initializePossibleMoves(); 
-		
+
 		this.missionaries = missionaries;
 		this.cannibals = cannibals;
 		this.boat = boat;
@@ -152,12 +159,12 @@ public class MCBoardState extends BoardState
 	}
 	public void printGameInfo(BoardState board)
 	{
-			System.out.println(" ");
-			System.out.println("The following states represent the number "); 
-			System.out.println("of missionaries, cannibals, and boats on "); 
-			System.out.println("each shore, respectively.");
-			System.out.println(" ");
-			System.out.println("  Start  " + "   ~~~   " + "   End   ");
+		System.out.println(" ");
+		System.out.println("The following states represent the number "); 
+		System.out.println("of missionaries, cannibals, and boats on "); 
+		System.out.println("each shore, respectively.");
+		System.out.println(" ");
+		System.out.println("  Start  " + "   ~~~   " + "   End   ");
 	}
 	public void printState(BoardState board)
 	{
@@ -185,7 +192,7 @@ public class MCBoardState extends BoardState
 		}
 		return true;
 	}  
-	
+
 	public int getMissionaries() 
 	{
 		return this.missionaries;
@@ -203,16 +210,25 @@ public class MCBoardState extends BoardState
 		return boatCapacity;
 	}
 
+	/***
+	 * Returns a heuristic for the Missionaries/Cannibals game
+	 */
 	public int getHeuristicCost(BoardState board)
 	{
 		return ((MCBoardState) board).getMissionaries() + ((MCBoardState) board).getCannibals() - 1; 
 	}
-	@Override
+
+	/***
+	 * Returns (better) heuristic for the Missionaries/Cannibals game
+	 */
 	public int getHeuristicValue(BoardState board) 
 	{
 		return (((MCBoardState) board).getMissionaries() + ((MCBoardState) board).getCannibals()) / ((MCBoardState) board).getBoatCapacity(); 
 	}
 
+	/***
+	 * Increments path cost for a particular board state by the game step cost
+	 */
 	public int incrementPathCost(BoardState board)
 	{
 		return board.pathCost + STEP_COST; 

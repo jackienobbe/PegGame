@@ -4,23 +4,38 @@ import java.util.List;
 
 public class PegSolBoardState extends BoardState
 {
+	private static final int STEP_COST = 1; 
+	private static final int BOARD_LEFT_BOUNDARY = 1;
+	private static final int BOARD_UP_BOUNDARY = 1;
+	private static final int JUMP_SIZE = 2;
+
 	int[][] pegPositions;
 	int pathCost; 
 
-	public PegSolBoardState( int[][] pegPositions, int level )
+	/**
+	 * Peg Solitaire board state constructor
+	 * @param pegPositions matrix of peg positions
+	 */
+	public PegSolBoardState( int[][] pegPositions )
 	{
 		this.pegPositions = pegPositions; 
 		//this.pathCost = pathCost; 
 		for(int i = 0; i < pegPositions.length; i++)
 		{
 			for(int j = 0; j < pegPositions[i].length; j++)
+			{
 				if(pegPositions[i][j] == 1)
 				{
 					Search.pegsRemaining++;  
 				}
+			}
 		}
 	}
 
+	/***
+	 * Successor function. Spawns children nodes based on the possible
+	 * moves of the current state.
+	 */
 	@Override
 	public List<BoardState> expand( BoardState currentBoard )
 	{
@@ -40,7 +55,7 @@ public class PegSolBoardState extends BoardState
 								newPegs[g][h] = ((PegSolBoardState) currentBoard).getBoardState()[g][h];
 							}
 						}
-						BoardState child = new PegSolBoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
+						BoardState child = new PegSolBoardState(newPegs);  //currentBoard.getPathCost() + 1);
 
 						child = movePegDown( child, i, j ); 
 						currentBoard.children.add(child);
@@ -101,6 +116,11 @@ public class PegSolBoardState extends BoardState
 		return children;
 	}
 
+	/***
+	 * Creates a copy of the current board to do work on
+	 * @param currentBoard
+	 * @return copy of currentBoard
+	 */
 	private BoardState makeChild(BoardState currentBoard) 
 	{
 		int[][] newPegs = new int[((PegSolBoardState) currentBoard).getBoardState().length][((PegSolBoardState) currentBoard).getBoardState().length];
@@ -111,16 +131,18 @@ public class PegSolBoardState extends BoardState
 				newPegs[g][h] = ((PegSolBoardState) currentBoard).getBoardState()[g][h];
 			}
 		}
-		BoardState child = new PegSolBoardState(newPegs, 1);  //currentBoard.getPathCost() + 1);
+		BoardState child = new PegSolBoardState(newPegs);  //currentBoard.getPathCost() + 1);
 		return child;
 	}
 
-	private static final int STEP_COST = 1; 
-	private static final int BOARD_LEFT_BOUNDARY = 1;
-	private static final int BOARD_UP_BOUNDARY = 1;
-	private static final int JUMP_SIZE = 2;
-
-	static boolean checkZeroMoveRight( BoardState board, int i, int j ) 
+	/**
+	 * Check if move possible to the right
+	 * @param board current game state
+	 * @param i y position of peg in question
+	 * @param j x position of peg in question
+	 * @return if move possible
+	 */
+	boolean checkZeroMoveRight( BoardState board, int i, int j ) 
 	{
 		//System.out.println("checkMoveRight: y" + i + ", x" + j );
 		// check if move will be out of bounds
@@ -219,21 +241,7 @@ public class PegSolBoardState extends BoardState
 		return board; 
 	}
 
-	public int getIndex(BoardState board)
-	{
-		int pegsRemaining = 0; 
-		for (int i = 0; i < ((PegSolBoardState) board).getBoardState().length; i++ )
-		{
-			for(int j = 0; j < ((PegSolBoardState) board).getBoardState()[i].length; j++)
-			{
-				if(((PegSolBoardState) board).getBoardState()[i][j] == 1)
-				{
-					pegsRemaining++; 
-				}
-			}
-		}
-		return pegsRemaining; 
-	}
+
 	public int[][] getBoardState() 
 	{
 		return pegPositions;
