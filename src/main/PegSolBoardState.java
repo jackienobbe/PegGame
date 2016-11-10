@@ -225,6 +225,13 @@ public class PegSolBoardState extends BoardState
 	}
 
 
+	/***
+	 * Move peg rght into an empty hole
+	 * @param board 
+	 * @param i y coordinate of hole to fill
+	 * @param j x coordinate of hole to fill
+	 * @return altered board
+	 */
 	public BoardState movePegRight( BoardState board, int i, int j ) 
 	{
 		((PegSolBoardState) board).getBoardState()[i][j] = 1; 
@@ -233,6 +240,13 @@ public class PegSolBoardState extends BoardState
 
 		return board;
 	}
+	/***
+	 * Move peg left into an empty hole
+	 * @param board 
+	 * @param i y coordinate of hole to fill
+	 * @param j x coordinate of hole to fill
+	 * @return altered board
+	 */
 	public BoardState movePegLeft(BoardState board, int i, int j)
 	{
 		((PegSolBoardState) board).getBoardState()[i][j] = 1; 
@@ -241,6 +255,13 @@ public class PegSolBoardState extends BoardState
 
 		return board; 
 	}
+	/***
+	 * Move peg up into an empty hole
+	 * @param board 
+	 * @param i y coordinate of hole to fill
+	 * @param j x coordinate of hole to fill
+	 * @return altered board
+	 */
 	public BoardState movePegUp( BoardState board, int i, int j ) 
 	{
 		((PegSolBoardState) board).getBoardState()[i][j] = 1; 
@@ -249,6 +270,13 @@ public class PegSolBoardState extends BoardState
 
 		return board; 
 	}
+	/***
+	 * Move peg down into an empty hole
+	 * @param board 
+	 * @param i y coordinate of hole to fill
+	 * @param j x coordinate of hole to fill
+	 * @return altered board
+	 */
 	public BoardState movePegDown( BoardState board, int i, int j ) 
 	{
 		((PegSolBoardState) board).getBoardState()[i][j] = 1; 
@@ -259,39 +287,47 @@ public class PegSolBoardState extends BoardState
 	}
 
 
+
 	public int[][] getBoardState() 
 	{
 		return pegPositions;
 	}
+	/** 
+	 * Print game rules and representation information
+	 * to guide the user as to what they see
+	 * @param board 
+	 */
 
 	public void printGameInfo(BoardState board)
 	{
-		//if (board instanceof PegSolBoardState)
-		{
-			System.out.println(" "); 
-			System.out.println("The following grids represent states ");
-			System.out.println("of the peg solitaire game. A 0 represents");
-			System.out.println("a hole, a 1 represents a peg, and a 2 ");
-			System.out.println("represents a position out of bounds.") ; 
-			System.out.println(" "); 
-		}
+		System.out.println(" "); 
+		System.out.println("The following grids represent states ");
+		System.out.println("of the peg solitaire game. A 0 represents");
+		System.out.println("a hole, a 1 represents a peg, and a 2 ");
+		System.out.println("represents a position out of bounds.") ; 
+		System.out.println(" "); 
 	}
+	
+	/***
+	 * Prints game state with the number of missionaries, cannibals, and boat presence
+	 */
 	public void printState(BoardState board)
 	{
-		if (board instanceof PegSolBoardState)
+		System.out.println("------------------------"); 
+		for (int k = 0; k < ((PegSolBoardState) board).getBoardState().length; k++)
 		{
-			System.out.println("------------------------"); 
-			for (int k = 0; k < ((PegSolBoardState) board).getBoardState().length; k++)
+			for (int g = 0; g < ((PegSolBoardState) board).getBoardState()[k].length; g++)
 			{
-				for (int g = 0; g < ((PegSolBoardState) board).getBoardState()[k].length; g++)
-				{
-					System.out.print(((PegSolBoardState) board).getBoardState()[k][g] + " ");
-				}
-				System.out.println(" ");
+				System.out.print(((PegSolBoardState) board).getBoardState()[k][g] + " ");
 			}
+			System.out.println(" ");
 		}
 	}
 
+
+	/** 
+	 * Goal test function.
+	 */
 	public boolean checkGoalState( BoardState board, BoardState goalState )
 	{
 
@@ -301,13 +337,17 @@ public class PegSolBoardState extends BoardState
 			{
 				if( ((PegSolBoardState) board).getBoardState()[i][j] != ((PegSolBoardState) goalState).getBoardState()[i][j])
 				{
-					//System.out.println("NOT GOAL");
 					return false; 
 				}
 			}
 		}
 		return true; 
 	}
+
+	/***
+	 * Used to properly use contains(). Compares peg solitaire board states.
+	 * @return if board's peg positions are the same
+	 */
 	public boolean equals(Object o)
 	{
 		if(o instanceof PegSolBoardState)
@@ -327,7 +367,15 @@ public class PegSolBoardState extends BoardState
 		}  
 		else return false; 
 	}
-	
+
+
+	/**
+	 * Attempted heuristic calculation. Calculates Manhattan distance cost for board state.
+	 * Sums the distance of pegs to the goal position. 
+	 * NOTE: defining the goalPosition has not been implemented, and therefore does not work.
+	 * @param board 
+	 * @return
+	 */
 	public int manhattanCost(BoardState board)
 	{
 		int value = 0;
@@ -341,12 +389,17 @@ public class PegSolBoardState extends BoardState
 				{
 					manDistance = Math.abs(i - Search.getGoalPosition()[0]) + Math.abs(j - Search.getGoalPosition()[1]);
 					value += manDistance;
-					//System.out.println("Hi. I have value. I am worth: " + value);
 				}
 			}
 		}
 		return value;
 	}
+
+	/**
+	 * Part of attempted heuristic function. Defines peg position weight matrix.
+	 * @param board
+	 * @return weighted cost of board
+	 */
 	public int weightedCost(BoardState board) 
 	{
 		int[][] costMatrix =  new int[][]{ 
@@ -357,9 +410,15 @@ public class PegSolBoardState extends BoardState
 			{ 4, 0, 3, 0, 3, 0, 4 },
 			{ 0, 0, 0, 0, 0, 0, 0 }, 
 			{ 0, 0, 4, 0, 4, 0, 0 }}; 
-		return evaluateCost(board, costMatrix);
+			return evaluateCost(board, costMatrix);
 	}
 
+	/**
+	 * Calculates the sum of each peg position based on a weight matrix.
+	 * @param board current state of game
+	 * @param costMatrix contains weight of peg position
+	 * @return boardCost heuristic value of board
+	 */
 	private static int evaluateCost(BoardState board, int[][] costMatrix) 
 	{
 		int boardCost = 0;
@@ -376,23 +435,32 @@ public class PegSolBoardState extends BoardState
 		return boardCost;
 	}
 
-	@Override
+	/**
+	 * Heuristic cost getter. Calls a heuristic function.
+	 * Uncomment/comment to choose heuristic function.
+	 */
 	public int getHeuristicCost(BoardState board) 
 	{
+		//return manhattanCost(board)
 		return weightedCost(board);
 	}
-	@Override
-	public int getHeuristicValue(BoardState board) 
-	{
-		return manhattanCost(board);
-	}
 
-	public int incrementPathCost(BoardState board)
-	{
-		return board.pathCost + STEP_COST; 
-	}
+	/**
+	 * Gets path cost to input board state
+	 * @param board
+	 * @return path cost
+	 */
 	public int getPathCost(BoardState board) 
 	{
 		return board.pathCost;
+	}
+
+	/**
+	 * Gets step cost for this game
+	 * @return step cost
+	 */
+	public int getStepCost()
+	{
+		return STEP_COST; 
 	}
 }

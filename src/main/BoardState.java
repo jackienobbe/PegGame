@@ -11,40 +11,43 @@ public abstract class BoardState
 	BoardState parent = null;
 	public int pathCost; 
 
-//	public void setBranchingFactor(BoardState board)
-//	{
-//		board.branchingFactor = board.children.size(); 
-//	};
+	/***************************
+	 * Successor function. This method spawns new states to explore from the possible moves
+	 * from the given state. 
+	 * @param currentBoard is a current game state to find next moves
+	 * @return List of BoardStates containing the next possible moves
+	 */
+	public abstract List<BoardState> expand(BoardState board);
+	/**
+	 * Goal test function. Checks if current state is the goal state.
+	 */
+	public abstract boolean checkGoalState(BoardState currentState, BoardState goalState);
 
-	//public abstract void getBoardState(); 
-
-	public void setBoardState( int[][] newBoard, BoardState board)
-	{
-		//board.pegPositions = newBoard; 
-	}
-
-	void setChildren( List<BoardState> children )
-	{
-		this.children = children; 
-	}
-
-	public List<BoardState> getChildren() 
-	{
-		return children;
-	}
+	/**
+	 * Increment path cost from start to this state with game specific .
+	 * @param board 
+	 * @return
+	 */
 	public int incrementPathCost(BoardState board)
 	{
-		return board.pathCost++; 
+		return board.pathCost + board.getStepCost(); 
 	}
+	/**
+	 * Gets path cost to input board state
+	 * @param board
+	 * @return path cost
+	 */
 	public int getPathCost(BoardState board) 
 	{
-		System.out.println(board.pathCost);
 		return board.pathCost;
 	}
 	public abstract int getHeuristicCost(BoardState board); 
-	public abstract List<BoardState> expand(BoardState board);
-	public abstract boolean checkGoalState(BoardState currentState, BoardState goalState);
+	/*** 
+	 * Checks if current state is the goal state.
+	 * @param currentState a board state to check
+	 * @param goalState a board in goal state to compare to
+	 */
 	public abstract void printState(BoardState board);
-	public abstract int getHeuristicValue(BoardState board);
+	public abstract int getStepCost(); 
 	
 }

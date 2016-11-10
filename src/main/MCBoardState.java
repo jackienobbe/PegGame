@@ -8,6 +8,7 @@ public class MCBoardState extends BoardState
 	private static final int MISSIONARIES = 0;
 	private static final int CANNIBALS = 1;
 	private static final int BOAT = 2;
+	private static final int STEP_COST = 1; 
 
 	private int cannibals;
 	private int missionaries;
@@ -142,7 +143,7 @@ public class MCBoardState extends BoardState
 	}
 
 	/*** 
-	 * Checks if current state is the goal state.
+	 * Goal test function. Checks if current state is the goal state.
 	 */
 	public boolean checkGoalState(BoardState board, BoardState goalState)
 	{
@@ -153,6 +154,9 @@ public class MCBoardState extends BoardState
 		return false; 
 	}
 
+	/***
+	 * Prints game state with the number of missionaries, cannibals, and boat presence
+	 */
 	public void printState( BoardState board)
 	{
 		if (board instanceof MCBoardState)
@@ -175,11 +179,11 @@ public class MCBoardState extends BoardState
 		}
 		return true;
 	}  
-	
-	int[] getBoardState()
-	{
-		return boardState;
-	}
+//	
+//	int[] getBoardState()
+//	{
+//		return boardState;
+//	}
 	
 	public int getMissionaries() 
 	{
@@ -198,16 +202,21 @@ public class MCBoardState extends BoardState
 		return boatCapacity;
 	}
 
+	/**
+	 * Heuristic cost getter. Calls a heuristic function.
+	 * Uncomment/comment to choose heuristic function.
+	 */
 	public int getHeuristicCost(BoardState board)
 	{
-		return ((MCBoardState) board).getMissionaries() + ((MCBoardState) board).getCannibals() - 1; 
-	}
-	@Override
-	public int getHeuristicValue(BoardState board) 
-	{
 		return (((MCBoardState) board).getMissionaries() + ((MCBoardState) board).getCannibals()) / ((MCBoardState) board).getBoatCapacity(); 
+		//return ((MCBoardState) board).getMissionaries() + ((MCBoardState) board).getCannibals() - 1; 
 	}
-
-
-	
+	/**
+	 * Gets step cost for this game
+	 * @return step cost
+	 */
+	public int getStepCost()
+	{
+		return STEP_COST; 
+	}
 }
